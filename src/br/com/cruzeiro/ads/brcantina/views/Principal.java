@@ -5,17 +5,51 @@
  */
 package br.com.cruzeiro.ads.brcantina.views;
 
+import br.com.cruzeiro.ads.brcantina.utils.InternalFrameUtils;
+import br.com.cruzeiro.ads.brcantina.views.internalframe.CaixaInterFrame;
+import br.com.cruzeiro.ads.brcantina.views.internalframe.CategoriaProdutoInterFrame;
+import br.com.cruzeiro.ads.brcantina.views.internalframe.ClientesIternFrame;
+import br.com.cruzeiro.ads.brcantina.views.internalframe.ColaboradoresIternFrame;
+import br.com.cruzeiro.ads.brcantina.views.internalframe.ContasPagarInterFrame;
+import br.com.cruzeiro.ads.brcantina.views.internalframe.ContasReceberInterFrame;
+import br.com.cruzeiro.ads.brcantina.views.internalframe.FornecedoresInterFrame;
+import br.com.cruzeiro.ads.brcantina.views.internalframe.HistoricoPedidosInterFrame;
+import br.com.cruzeiro.ads.brcantina.views.internalframe.ProdutosInterFrame;
+
 /**
  *
  * @author jose.antonio
  */
 public class Principal extends javax.swing.JFrame {
 
+    private ColaboradoresIternFrame mColaboradoresIternFrame;
+    private ClientesIternFrame mClientesIternFrame;
+    private ProdutosInterFrame mProdutosInterFrame;
+    private HistoricoPedidosInterFrame mHistoricoPedidosInterFrame;
+    private CaixaInterFrame mCaixaInterFrame;
+    private CategoriaProdutoInterFrame mCategoriaProdutoInterFrame;
+    private FornecedoresInterFrame mFornecedoresInterFrame;
+    private ContasPagarInterFrame mContasPagarInterFrame;
+    private ContasReceberInterFrame mContasReceberInterFrame;
+    
     /**
      * Creates new form Principal
      */
     public Principal() {
         initComponents();
+        initObjetos();
+    }
+    
+    private void initObjetos() {
+        mColaboradoresIternFrame = new ColaboradoresIternFrame();
+        mClientesIternFrame = new ClientesIternFrame();
+        mProdutosInterFrame = new ProdutosInterFrame();
+        mHistoricoPedidosInterFrame = new HistoricoPedidosInterFrame();
+        mCaixaInterFrame = new CaixaInterFrame();
+        mCategoriaProdutoInterFrame = new CategoriaProdutoInterFrame();
+        mFornecedoresInterFrame = new FornecedoresInterFrame();
+        mContasPagarInterFrame = new ContasPagarInterFrame();
+        mContasReceberInterFrame = new ContasReceberInterFrame();
     }
 
     /**
@@ -28,132 +62,229 @@ public class Principal extends javax.swing.JFrame {
     private void initComponents() {
 
         jMenu3 = new javax.swing.JMenu();
-        jDesktopPane1 = new javax.swing.JDesktopPane();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
-        jMenuItem8 = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
-        jMenuItem9 = new javax.swing.JMenuItem();
-        jMenuItem10 = new javax.swing.JMenuItem();
-        jMenuItem11 = new javax.swing.JMenuItem();
-        jMenuItem12 = new javax.swing.JMenuItem();
-        jMenu5 = new javax.swing.JMenu();
-        jMenuItem13 = new javax.swing.JMenuItem();
-        jMenuItem14 = new javax.swing.JMenuItem();
-        jMenuItem15 = new javax.swing.JMenuItem();
-        jMenu6 = new javax.swing.JMenu();
+        dkpContainer = new javax.swing.JDesktopPane();
+        menuOptions = new javax.swing.JMenuBar();
+        menuPrincipal = new javax.swing.JMenu();
+        menuItemAbrirFecharCaixa = new javax.swing.JMenuItem();
+        menuItemClientes = new javax.swing.JMenuItem();
+        menuItemHistoricoPedidos = new javax.swing.JMenuItem();
+        menuItemSair = new javax.swing.JMenuItem();
+        menuProdutos = new javax.swing.JMenu();
+        menuItemProdutos = new javax.swing.JMenuItem();
+        menuItemCategorias = new javax.swing.JMenuItem();
+        menuItemHistoricoEntradaSaida = new javax.swing.JMenuItem();
+        menuItemHistoricoItensVendidos = new javax.swing.JMenuItem();
+        menuFornecedores = new javax.swing.JMenu();
+        menuItemFornecedores = new javax.swing.JMenuItem();
+        menuItemContaPagar = new javax.swing.JMenuItem();
+        menuItemContaReceber = new javax.swing.JMenuItem();
+        menuItemFormaPagamento = new javax.swing.JMenuItem();
+        menuConfiguracoes = new javax.swing.JMenu();
+        menuItemConfigSistema = new javax.swing.JMenuItem();
+        menuItemColaoradores = new javax.swing.JMenuItem();
+        menuItemAltararSenha = new javax.swing.JMenuItem();
+        menuSobre = new javax.swing.JMenu();
 
         jMenu3.setText("jMenu3");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
-        jDesktopPane1.setLayout(jDesktopPane1Layout);
-        jDesktopPane1Layout.setHorizontalGroup(
-            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout dkpContainerLayout = new javax.swing.GroupLayout(dkpContainer);
+        dkpContainer.setLayout(dkpContainerLayout);
+        dkpContainerLayout.setHorizontalGroup(
+            dkpContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 1298, Short.MAX_VALUE)
         );
-        jDesktopPane1Layout.setVerticalGroup(
-            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        dkpContainerLayout.setVerticalGroup(
+            dkpContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 604, Short.MAX_VALUE)
         );
 
-        jMenu1.setText("Principal");
+        menuPrincipal.setText("Principal");
 
-        jMenuItem1.setText("Abrir/Fechar Meu Caixa");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        menuItemAbrirFecharCaixa.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
+        menuItemAbrirFecharCaixa.setText("Abrir/Fechar Meu Caixa");
+        menuItemAbrirFecharCaixa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                menuItemAbrirFecharCaixaActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        menuPrincipal.add(menuItemAbrirFecharCaixa);
 
-        jMenuItem2.setText("Clientes");
-        jMenu1.add(jMenuItem2);
+        menuItemClientes.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
+        menuItemClientes.setText("Clientes");
+        menuItemClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemClientesActionPerformed(evt);
+            }
+        });
+        menuPrincipal.add(menuItemClientes);
 
-        jMenuItem3.setText("Histórico de Pedidos");
-        jMenu1.add(jMenuItem3);
+        menuItemHistoricoPedidos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.SHIFT_MASK));
+        menuItemHistoricoPedidos.setText("Histórico de Pedidos");
+        menuItemHistoricoPedidos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemHistoricoPedidosActionPerformed(evt);
+            }
+        });
+        menuPrincipal.add(menuItemHistoricoPedidos);
 
-        jMenuItem4.setText("Sair");
-        jMenu1.add(jMenuItem4);
+        menuItemSair.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.CTRL_MASK));
+        menuItemSair.setText("Sair");
+        menuItemSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemSairActionPerformed(evt);
+            }
+        });
+        menuPrincipal.add(menuItemSair);
 
-        jMenuBar1.add(jMenu1);
+        menuOptions.add(menuPrincipal);
 
-        jMenu2.setText("Produtos");
+        menuProdutos.setText("Produtos");
 
-        jMenuItem5.setText("Produtos");
-        jMenu2.add(jMenuItem5);
+        menuItemProdutos.setText("Produtos");
+        menuItemProdutos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemProdutosActionPerformed(evt);
+            }
+        });
+        menuProdutos.add(menuItemProdutos);
 
-        jMenuItem6.setText("Categorias");
-        jMenu2.add(jMenuItem6);
+        menuItemCategorias.setText("Categorias");
+        menuItemCategorias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemCategoriasActionPerformed(evt);
+            }
+        });
+        menuProdutos.add(menuItemCategorias);
 
-        jMenuItem7.setText("Histórico de Entrada e Saídas");
-        jMenu2.add(jMenuItem7);
+        menuItemHistoricoEntradaSaida.setText("Histórico de Entrada e Saídas");
+        menuProdutos.add(menuItemHistoricoEntradaSaida);
 
-        jMenuItem8.setText("Histórico de Itens Vendidos");
-        jMenu2.add(jMenuItem8);
+        menuItemHistoricoItensVendidos.setText("Histórico de Itens Vendidos");
+        menuProdutos.add(menuItemHistoricoItensVendidos);
 
-        jMenuBar1.add(jMenu2);
+        menuOptions.add(menuProdutos);
 
-        jMenu4.setText("Financeiro");
+        menuFornecedores.setText("Financeiro");
 
-        jMenuItem9.setText("Fornecedores");
-        jMenu4.add(jMenuItem9);
+        menuItemFornecedores.setText("Fornecedores");
+        menuItemFornecedores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemFornecedoresActionPerformed(evt);
+            }
+        });
+        menuFornecedores.add(menuItemFornecedores);
 
-        jMenuItem10.setText("Contas a Pagar");
-        jMenu4.add(jMenuItem10);
+        menuItemContaPagar.setText("Contas a Pagar");
+        menuItemContaPagar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemContaPagarActionPerformed(evt);
+            }
+        });
+        menuFornecedores.add(menuItemContaPagar);
 
-        jMenuItem11.setText("Contas a Receber");
-        jMenu4.add(jMenuItem11);
+        menuItemContaReceber.setText("Contas a Receber");
+        menuItemContaReceber.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemContaReceberActionPerformed(evt);
+            }
+        });
+        menuFornecedores.add(menuItemContaReceber);
 
-        jMenuItem12.setText("Forma de Pagamento");
-        jMenu4.add(jMenuItem12);
+        menuItemFormaPagamento.setText("Forma de Pagamento");
+        menuFornecedores.add(menuItemFormaPagamento);
 
-        jMenuBar1.add(jMenu4);
+        menuOptions.add(menuFornecedores);
 
-        jMenu5.setText("Configurações");
+        menuConfiguracoes.setText("Configurações");
 
-        jMenuItem13.setText("Configurações do Sistema");
-        jMenu5.add(jMenuItem13);
+        menuItemConfigSistema.setText("Configurações do Sistema");
+        menuConfiguracoes.add(menuItemConfigSistema);
 
-        jMenuItem14.setText("Colaboradores");
-        jMenu5.add(jMenuItem14);
+        menuItemColaoradores.setText("Colaboradores");
+        menuItemColaoradores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemColaoradoresActionPerformed(evt);
+            }
+        });
+        menuConfiguracoes.add(menuItemColaoradores);
 
-        jMenuItem15.setText("Alterar Minha Senha");
-        jMenu5.add(jMenuItem15);
+        menuItemAltararSenha.setText("Alterar Minha Senha");
+        menuItemAltararSenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemAltararSenhaActionPerformed(evt);
+            }
+        });
+        menuConfiguracoes.add(menuItemAltararSenha);
 
-        jMenuBar1.add(jMenu5);
+        menuOptions.add(menuConfiguracoes);
 
-        jMenu6.setText("Sobre");
-        jMenuBar1.add(jMenu6);
+        menuSobre.setText("Sobre");
+        menuOptions.add(menuSobre);
 
-        setJMenuBar(jMenuBar1);
+        setJMenuBar(menuOptions);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane1)
+            .addComponent(dkpContainer)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane1)
+            .addComponent(dkpContainer)
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    private void menuItemAbrirFecharCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemAbrirFecharCaixaActionPerformed
+        InternalFrameUtils.init(mCaixaInterFrame, dkpContainer);
+    }//GEN-LAST:event_menuItemAbrirFecharCaixaActionPerformed
+
+    private void menuItemSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemSairActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_menuItemSairActionPerformed
+
+    private void menuItemColaoradoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemColaoradoresActionPerformed
+        InternalFrameUtils.init(mColaboradoresIternFrame, dkpContainer);
+    }//GEN-LAST:event_menuItemColaoradoresActionPerformed
+
+    private void menuItemClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemClientesActionPerformed
+        InternalFrameUtils.init(mClientesIternFrame, dkpContainer);
+    }//GEN-LAST:event_menuItemClientesActionPerformed
+
+    private void menuItemProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemProdutosActionPerformed
+        InternalFrameUtils.init(mProdutosInterFrame, dkpContainer);
+    }//GEN-LAST:event_menuItemProdutosActionPerformed
+
+    private void menuItemHistoricoPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemHistoricoPedidosActionPerformed
+        InternalFrameUtils.init(mHistoricoPedidosInterFrame, dkpContainer);
+    }//GEN-LAST:event_menuItemHistoricoPedidosActionPerformed
+
+    private void menuItemCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCategoriasActionPerformed
+        InternalFrameUtils.init(mCategoriaProdutoInterFrame, dkpContainer);
+    }//GEN-LAST:event_menuItemCategoriasActionPerformed
+
+    private void menuItemFornecedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemFornecedoresActionPerformed
+        InternalFrameUtils.init(mFornecedoresInterFrame, dkpContainer);
+    }//GEN-LAST:event_menuItemFornecedoresActionPerformed
+
+    private void menuItemContaPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemContaPagarActionPerformed
+        InternalFrameUtils.init(mContasPagarInterFrame, dkpContainer);
+    }//GEN-LAST:event_menuItemContaPagarActionPerformed
+
+    private void menuItemContaReceberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemContaReceberActionPerformed
+        InternalFrameUtils.init(mContasReceberInterFrame, dkpContainer);
+    }//GEN-LAST:event_menuItemContaReceberActionPerformed
+
+    private void menuItemAltararSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemAltararSenhaActionPerformed
+        AlterarSenhaJFrame alterarSenhaJFrame = new AlterarSenhaJFrame();
+        alterarSenhaJFrame.setVisible(true);
+        alterarSenhaJFrame.setLocationRelativeTo(this);
+    }//GEN-LAST:event_menuItemAltararSenhaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -191,28 +322,28 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JDesktopPane jDesktopPane1;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
+    private javax.swing.JDesktopPane dkpContainer;
     private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
-    private javax.swing.JMenu jMenu5;
-    private javax.swing.JMenu jMenu6;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem10;
-    private javax.swing.JMenuItem jMenuItem11;
-    private javax.swing.JMenuItem jMenuItem12;
-    private javax.swing.JMenuItem jMenuItem13;
-    private javax.swing.JMenuItem jMenuItem14;
-    private javax.swing.JMenuItem jMenuItem15;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JMenuItem jMenuItem9;
+    private javax.swing.JMenu menuConfiguracoes;
+    private javax.swing.JMenu menuFornecedores;
+    private javax.swing.JMenuItem menuItemAbrirFecharCaixa;
+    private javax.swing.JMenuItem menuItemAltararSenha;
+    private javax.swing.JMenuItem menuItemCategorias;
+    private javax.swing.JMenuItem menuItemClientes;
+    private javax.swing.JMenuItem menuItemColaoradores;
+    private javax.swing.JMenuItem menuItemConfigSistema;
+    private javax.swing.JMenuItem menuItemContaPagar;
+    private javax.swing.JMenuItem menuItemContaReceber;
+    private javax.swing.JMenuItem menuItemFormaPagamento;
+    private javax.swing.JMenuItem menuItemFornecedores;
+    private javax.swing.JMenuItem menuItemHistoricoEntradaSaida;
+    private javax.swing.JMenuItem menuItemHistoricoItensVendidos;
+    private javax.swing.JMenuItem menuItemHistoricoPedidos;
+    private javax.swing.JMenuItem menuItemProdutos;
+    private javax.swing.JMenuItem menuItemSair;
+    private javax.swing.JMenuBar menuOptions;
+    private javax.swing.JMenu menuPrincipal;
+    private javax.swing.JMenu menuProdutos;
+    private javax.swing.JMenu menuSobre;
     // End of variables declaration//GEN-END:variables
 }
