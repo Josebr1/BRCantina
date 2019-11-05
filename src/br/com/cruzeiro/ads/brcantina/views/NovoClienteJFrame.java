@@ -65,6 +65,7 @@ public class NovoClienteJFrame extends javax.swing.JDialog {
         btnVoltar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Novo Cliente");
 
         paneGeral.setBorder(javax.swing.BorderFactory.createTitledBorder("Geral"));
 
