@@ -247,6 +247,9 @@
         <Component class="javax.swing.JTextField" name="txtNome">
         </Component>
         <Component class="javax.swing.JTextField" name="txtDocumento">
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="try{&#xa;   javax.swing.text.MaskFormatter data= new javax.swing.text.MaskFormatter(&quot;##.###.###/####-##&quot;);&#xa;   txtDocumento = new javax.swing.JFormattedTextField(data);&#xa;}&#xa;   catch (Exception e){&#xa;} "/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="lblDocumento">
           <Properties>
@@ -281,6 +284,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtCep">
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="try{&#xa;   javax.swing.text.MaskFormatter data= new javax.swing.text.MaskFormatter(&quot;#####-###&quot;);&#xa;   txtCep = new javax.swing.JFormattedTextField(data);&#xa;}catch (Exception e){&#xa;    log.error(e);&#xa;} "/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="lblCep">
           <Properties>

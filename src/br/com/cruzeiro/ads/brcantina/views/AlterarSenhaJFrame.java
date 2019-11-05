@@ -5,6 +5,7 @@
  */
 package br.com.cruzeiro.ads.brcantina.views;
 
+
 /**
  *
  * @author jose.antonio
@@ -91,6 +92,11 @@ public class AlterarSenhaJFrame extends javax.swing.JDialog {
         );
 
         btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
 
         btnVoltar.setText("Voltar");
 
@@ -124,6 +130,10 @@ public class AlterarSenhaJFrame extends javax.swing.JDialog {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        
+    }//GEN-LAST:event_btnSalvarActionPerformed
 
     /**
      * @param args the command line arguments

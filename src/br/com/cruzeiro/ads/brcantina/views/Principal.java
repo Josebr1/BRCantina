@@ -15,6 +15,7 @@ import br.com.cruzeiro.ads.brcantina.views.internalframe.ContasReceberInterFrame
 import br.com.cruzeiro.ads.brcantina.views.internalframe.FornecedoresInterFrame;
 import br.com.cruzeiro.ads.brcantina.views.internalframe.HistoricoPedidosInterFrame;
 import br.com.cruzeiro.ads.brcantina.views.internalframe.ProdutosInterFrame;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -22,6 +23,9 @@ import br.com.cruzeiro.ads.brcantina.views.internalframe.ProdutosInterFrame;
  */
 public class Principal extends javax.swing.JFrame {
 
+    static Logger log = Logger.getLogger(
+                      Principal.class.getName());
+    
     private ColaboradoresIternFrame mColaboradoresIternFrame;
     private ClientesIternFrame mClientesIternFrame;
     private ProdutosInterFrame mProdutosInterFrame;
@@ -36,6 +40,7 @@ public class Principal extends javax.swing.JFrame {
      * Creates new form Principal
      */
     public Principal() {
+        log.info("Init View Principal");
         initComponents();
         initObjetos();
     }
