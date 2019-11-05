@@ -191,10 +191,15 @@ public class NovoColaboradorJFrame extends javax.swing.JDialog {
                 .addComponent(lblDicaSenha)
                 .addGap(18, 18, 18)
                 .addComponent(checkUsuarioAtivo)
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         btnVoltar.setText("Voltar");
+        btnVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVoltarActionPerformed(evt);
+            }
+        });
 
         btnSalvar.setText("Salvar");
 
@@ -232,6 +237,10 @@ public class NovoColaboradorJFrame extends javax.swing.JDialog {
     private void txtFonePrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFonePrincipalActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFonePrincipalActionPerformed
+
+    private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnVoltarActionPerformed
 
     /**
      * @param args the command line arguments

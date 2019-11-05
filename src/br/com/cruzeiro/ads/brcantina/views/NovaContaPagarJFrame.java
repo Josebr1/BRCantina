@@ -170,7 +170,7 @@ public class NovaContaPagarJFrame extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(lblPagoEm)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(datePickerPagoEm, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+                .addComponent(datePickerPagoEm, javax.swing.GroupLayout.PREFERRED_SIZE, 120, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblDesconto)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -202,6 +202,11 @@ public class NovaContaPagarJFrame extends javax.swing.JDialog {
         );
 
         btnVoltar.setText("Voltar");
+        btnVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVoltarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -248,6 +253,11 @@ public class NovaContaPagarJFrame extends javax.swing.JDialog {
     private void txtJurosMultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtJurosMultaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtJurosMultaActionPerformed
+
+    private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_btnVoltarActionPerformed
 
     /**
      * @param args the command line arguments
