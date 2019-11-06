@@ -1,12 +1,14 @@
 package br.com.cruzeiro.ads.brcantina.dao;
 
 import br.com.cruzeiro.ads.brcantina.dao.interfaces.IUsuarioDAO;
+import br.com.cruzeiro.ads.brcantina.models.Usuario;
 import br.com.cruzeiro.ads.brcantina.models.enums.TipoUsuario;
 import br.com.cruzeiro.ads.brcantina.utils.DBUtils;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,7 +17,7 @@ public class UsuarioDAO implements IUsuarioDAO{
     private Connection mConnection = null;
     
     @Override
-    public boolean isFirstUserCreate() {
+    public boolean isFirstUserCreate() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException{
         ResultSet resultSet;
         
         try {
@@ -27,16 +29,34 @@ public class UsuarioDAO implements IUsuarioDAO{
             
             resultSet = statement.executeQuery();
             return !resultSet.next();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (mConnection != null)
+                mConnection.close();
         }
-        return false;
+    }
+
+    @Override
+    public void insert(Usuario usuario) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+        mConnection = DBUtils.getConnection();
+        
+        try {
+            String sql = "INSERT INTO usuario(id_usuario, nome, email, tem_acesso_programa, login, senha, ativo, fk_tipo_usuario) VALUES(?, ?, ?, ?, ?, ?, ?, ?);";
+            
+            PreparedStatement statement = DBUtils.getPreparedStatement(mConnection, sql);
+            statement.setObject(1, UUID.randomUUID().toString());
+            statement.setString(2, usuario.getNome());
+            statement.setString(3, usuario.getEmail());
+            statement.setBoolean(4, usuario.isTemAcessoAoSistema());
+            statement.setString(5, usuario.getLogin());
+            statement.setString(6, usuario.getSenha());
+            statement.setBoolean(7, usuario.isAtivo());
+            statement.setInt(8, 1);
+            
+            statement.execute();
+        } finally {
+            if (mConnection != null)
+                mConnection.close();
+        }
     }
     
 }

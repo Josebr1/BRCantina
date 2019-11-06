@@ -3,6 +3,10 @@ package br.com.cruzeiro.ads.brcantina.controllers;
 import br.com.cruzeiro.ads.brcantina.controllers.interfaces.IUserController;
 import br.com.cruzeiro.ads.brcantina.dao.UsuarioDAO;
 import br.com.cruzeiro.ads.brcantina.dao.interfaces.IUsuarioDAO;
+import br.com.cruzeiro.ads.brcantina.models.Usuario;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class UserController implements IUserController{
 
@@ -14,12 +18,21 @@ public class UserController implements IUserController{
     
     @Override
     public boolean primeiroAdm() {
-        return this.mUsuarioDAO.isFirstUserCreate();
+        try {
+            return this.mUsuarioDAO.isFirstUserCreate();
+        } catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
 
     @Override
-    public void cadastrarPrimeiroAdm() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void cadastrar(Usuario usuario) {
+        try {
+            this.mUsuarioDAO.insert(usuario);
+        } catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }

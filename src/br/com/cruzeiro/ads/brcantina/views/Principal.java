@@ -20,6 +20,8 @@ import br.com.cruzeiro.ads.brcantina.views.internalframe.HistoricoPedidosInterFr
 import br.com.cruzeiro.ads.brcantina.views.internalframe.ProdutosInterFrame;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.sql.SQLException;
+import java.util.logging.Level;
 import javax.swing.JOptionPane;
 import org.apache.log4j.Logger;
 
@@ -331,8 +333,12 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_menuItemPedidoCaixaActionPerformed
 
     private void menuItemConfigSistemaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemConfigSistemaActionPerformed
-        IUsuarioDAO usuario = new UsuarioDAO();
-        System.err.println(usuario.isFirstUserCreate());
+        try {
+            IUsuarioDAO usuario = new UsuarioDAO();
+            System.err.println(usuario.isFirstUserCreate());
+        } catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException ex) {
+            java.util.logging.Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_menuItemConfigSistemaActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened

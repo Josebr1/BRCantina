@@ -6,16 +6,29 @@
 
 package br.com.cruzeiro.ads.brcantina.views;
 
+import br.com.cruzeiro.ads.brcantina.controllers.UserController;
+import br.com.cruzeiro.ads.brcantina.controllers.interfaces.IUserController;
+import br.com.cruzeiro.ads.brcantina.models.Usuario;
+import br.com.cruzeiro.ads.brcantina.models.enums.TipoUsuario;
+
 /**
  *
  * @author jose.antonio
  */
 public class NovoColaboradorJFrame extends javax.swing.JDialog {
 
+    /* CONTROLLERS */
+    private IUserController mUserController;
+    
     /** Creates new form CadastroUsuarioJFrame */
     public NovoColaboradorJFrame() {
         this.setModal(true);
         initComponents();
+        this.initControllers();
+    }
+    
+    private void initControllers() {
+        this.mUserController = new UserController();
     }
 
     /** This method is called from within the constructor to
@@ -202,6 +215,11 @@ public class NovoColaboradorJFrame extends javax.swing.JDialog {
         });
 
         btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -241,6 +259,22 @@ public class NovoColaboradorJFrame extends javax.swing.JDialog {
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnVoltarActionPerformed
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        Usuario u = new Usuario();
+        u.setNome(txtNome.getText());
+        u.setEmail(txtEmail.getText());
+        u.setTemAcessoAoSistema(checkPermitirAcesso.isSelected());
+        u.setTipoUsuario(TipoUsuario.ADMINISTRADOR);
+        u.setLogin(txtLogin.getText());
+        u.setSenha(String.valueOf(txtSenha.getPassword()));
+        u.setAtivo(checkUsuarioAtivo.isSelected());
+        
+        String s = u.getSenha();
+        
+        this.mUserController.cadastrar(u);
+        
+    }//GEN-LAST:event_btnSalvarActionPerformed
 
     /**
      * @param args the command line arguments
