@@ -41,6 +41,11 @@ public class AdicionarAoPedidoJFrame extends javax.swing.JDialog {
         paneInformacoes.setBackground(new java.awt.Color(130, 130, 130));
 
         btnAdicionar.setText("Adicionar");
+        btnAdicionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdicionarActionPerformed(evt);
+            }
+        });
 
         jLabel1.setForeground(new java.awt.Color(254, 254, 254));
         jLabel1.setText("Pesquisar Produto...");
@@ -105,6 +110,10 @@ public class AdicionarAoPedidoJFrame extends javax.swing.JDialog {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAdicionarActionPerformed
 
     /**
      * @param args the command line arguments

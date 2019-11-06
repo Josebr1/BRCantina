@@ -5,6 +5,9 @@
  */
 package br.com.cruzeiro.ads.brcantina.views;
 
+import br.com.cruzeiro.ads.brcantina.controllers.UserController;
+import br.com.cruzeiro.ads.brcantina.dao.UsuarioDAO;
+import br.com.cruzeiro.ads.brcantina.dao.interfaces.IUsuarioDAO;
 import br.com.cruzeiro.ads.brcantina.utils.InternalFrameUtils;
 import br.com.cruzeiro.ads.brcantina.views.internalframe.CaixaInterFrame;
 import br.com.cruzeiro.ads.brcantina.views.internalframe.CategoriaProdutoInterFrame;
@@ -15,12 +18,11 @@ import br.com.cruzeiro.ads.brcantina.views.internalframe.ContasReceberInterFrame
 import br.com.cruzeiro.ads.brcantina.views.internalframe.FornecedoresInterFrame;
 import br.com.cruzeiro.ads.brcantina.views.internalframe.HistoricoPedidosInterFrame;
 import br.com.cruzeiro.ads.brcantina.views.internalframe.ProdutosInterFrame;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import javax.swing.JOptionPane;
 import org.apache.log4j.Logger;
 
-/**
- *
- * @author jose.antonio
- */
 public class Principal extends javax.swing.JFrame {
 
     static Logger log = Logger.getLogger(
@@ -36,6 +38,10 @@ public class Principal extends javax.swing.JFrame {
     private ContasPagarInterFrame mContasPagarInterFrame;
     private ContasReceberInterFrame mContasReceberInterFrame;
     
+    
+    /*CONTROLLERS*/
+    private UserController mUserController;
+    
     /**
      * Creates new form Principal
      */
@@ -43,6 +49,7 @@ public class Principal extends javax.swing.JFrame {
         log.info("Init View Principal");
         initComponents();
         initObjetos();
+        initControllers();
     }
     
     private void initObjetos() {
@@ -55,6 +62,10 @@ public class Principal extends javax.swing.JFrame {
         mFornecedoresInterFrame = new FornecedoresInterFrame();
         mContasPagarInterFrame = new ContasPagarInterFrame();
         mContasReceberInterFrame = new ContasReceberInterFrame();
+    }
+    
+    private void initControllers() {
+        this.mUserController = new UserController();
     }
 
     /**
@@ -94,6 +105,14 @@ public class Principal extends javax.swing.JFrame {
         jMenu3.setText("jMenu3");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         javax.swing.GroupLayout dkpContainerLayout = new javax.swing.GroupLayout(dkpContainer);
         dkpContainer.setLayout(dkpContainerLayout);
@@ -214,6 +233,11 @@ public class Principal extends javax.swing.JFrame {
         menuConfiguracoes.setText("Configurações");
 
         menuItemConfigSistema.setText("Configurações do Sistema");
+        menuItemConfigSistema.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemConfigSistemaActionPerformed(evt);
+            }
+        });
         menuConfiguracoes.add(menuItemConfigSistema);
 
         menuItemColaoradores.setText("Colaboradores");
@@ -305,6 +329,45 @@ public class Principal extends javax.swing.JFrame {
         pedidoCaixaJFrame.setVisible(true);
         pedidoCaixaJFrame.setLocationRelativeTo(this);
     }//GEN-LAST:event_menuItemPedidoCaixaActionPerformed
+
+    private void menuItemConfigSistemaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemConfigSistemaActionPerformed
+        IUsuarioDAO usuario = new UsuarioDAO();
+        System.err.println(usuario.isFirstUserCreate());
+    }//GEN-LAST:event_menuItemConfigSistemaActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        if(this.mUserController.primeiroAdm()){
+            JOptionPane.showMessageDialog(rootPane, "Você precisa cadastrar um usuário administrador para conseguir acessar o sistema");
+            NovoColaboradorJFrame colaboradorJFrame = new NovoColaboradorJFrame();
+            colaboradorJFrame.setVisible(true);
+            colaboradorJFrame.setLocationRelativeTo(this);
+            colaboradorJFrame.addWindowListener(new WindowListener() {
+                @Override
+                public void windowOpened(WindowEvent e) {}
+                @Override
+                public void windowClosing(WindowEvent e) {}
+                
+                @Override
+                public void windowClosed(WindowEvent e) {
+                    log.info("Primeiro usuário administrador não cadastrado");
+                    System.exit(0);
+                }
+
+                @Override
+                public void windowIconified(WindowEvent e) {}
+                @Override
+                public void windowDeiconified(WindowEvent e) {}
+                @Override
+                public void windowActivated(WindowEvent e) {}
+                @Override
+                public void windowDeactivated(WindowEvent e) {}
+            });
+        }
+    }//GEN-LAST:event_formWindowOpened
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowActivated
 
     /**
      * @param args the command line arguments
