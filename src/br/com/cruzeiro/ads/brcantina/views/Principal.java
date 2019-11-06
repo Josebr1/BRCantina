@@ -71,6 +71,7 @@ public class Principal extends javax.swing.JFrame {
         menuOptions = new javax.swing.JMenuBar();
         menuPrincipal = new javax.swing.JMenu();
         menuItemAbrirFecharCaixa = new javax.swing.JMenuItem();
+        menuItemPedidoCaixa = new javax.swing.JMenuItem();
         menuItemClientes = new javax.swing.JMenuItem();
         menuItemHistoricoPedidos = new javax.swing.JMenuItem();
         menuItemSair = new javax.swing.JMenuItem();
@@ -115,6 +116,14 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         menuPrincipal.add(menuItemAbrirFecharCaixa);
+
+        menuItemPedidoCaixa.setText("Pedido no Caixa");
+        menuItemPedidoCaixa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemPedidoCaixaActionPerformed(evt);
+            }
+        });
+        menuPrincipal.add(menuItemPedidoCaixa);
 
         menuItemClientes.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
         menuItemClientes.setText("Clientes");
@@ -291,6 +300,12 @@ public class Principal extends javax.swing.JFrame {
         alterarSenhaJFrame.setLocationRelativeTo(this);
     }//GEN-LAST:event_menuItemAltararSenhaActionPerformed
 
+    private void menuItemPedidoCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemPedidoCaixaActionPerformed
+        PedidoCaixaJFrame pedidoCaixaJFrame = new PedidoCaixaJFrame();
+        pedidoCaixaJFrame.setVisible(true);
+        pedidoCaixaJFrame.setLocationRelativeTo(this);
+    }//GEN-LAST:event_menuItemPedidoCaixaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -344,6 +359,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuItemHistoricoEntradaSaida;
     private javax.swing.JMenuItem menuItemHistoricoItensVendidos;
     private javax.swing.JMenuItem menuItemHistoricoPedidos;
+    private javax.swing.JMenuItem menuItemPedidoCaixa;
     private javax.swing.JMenuItem menuItemProdutos;
     private javax.swing.JMenuItem menuItemSair;
     private javax.swing.JMenuBar menuOptions;
