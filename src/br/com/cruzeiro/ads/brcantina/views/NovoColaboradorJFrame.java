@@ -29,6 +29,7 @@ public class NovoColaboradorJFrame extends javax.swing.JDialog {
         this.setModal(true);
         initComponents();
         this.initControllers();
+        this.getRootPane().setDefaultButton(btnSalvar);
     }
     
     private void initControllers() {
@@ -194,7 +195,7 @@ public class NovoColaboradorJFrame extends javax.swing.JDialog {
                     .addComponent(txtFonePrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblEmail)
                     .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(65, 65, 65)
+                .addGap(41, 41, 41)
                 .addComponent(checkPermitirAcesso)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(paneInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

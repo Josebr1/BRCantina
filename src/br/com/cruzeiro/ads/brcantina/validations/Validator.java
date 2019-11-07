@@ -8,8 +8,11 @@ package br.com.cruzeiro.ads.brcantina.validations;
 import br.com.cruzeiro.ads.brcantina.annotations.Required;
 import br.com.cruzeiro.ads.brcantina.exceptions.RequiredFieldException;
 import com.mysql.cj.util.StringUtils;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Validator {
     
@@ -20,6 +23,7 @@ public class Validator {
          *  Iterate over each field to check if that field
          *  has the "Required" annotation declared for it or not
          */
+        List<String> listErrors = new ArrayList<>();
         for(Field field : declaredFields) {
 
             Annotation annotation = field.getAnnotation(Required.class);
@@ -56,15 +60,19 @@ public class Validator {
                     
                     if (field.get(objectToValidate) instanceof String){
                         if(StringUtils.isNullOrEmpty((String) field.get(objectToValidate))){
-                            throw new RequiredFieldException(msgError);
+                            //throw new RequiredFieldException(msgError);
+                            listErrors.add(msgError);
                         }
                     }
                     if (field.get(objectToValidate) == null) {
-                        throw new RequiredFieldException(msgError);
+                        //throw new RequiredFieldException(msgError);
+                        listErrors.add(msgError);
                     }
                 }
             }
         }
+        if(listErrors.size() > 0)
+            throw new RequiredFieldException(String.join("\n", listErrors));
         return true;
     }
     
