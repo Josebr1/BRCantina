@@ -50,6 +50,12 @@ public class NovoColaboradorJFrame extends javax.swing.JDialog {
         txtNome = new javax.swing.JTextField();
         lblFonePrincipal = new javax.swing.JLabel();
         txtFonePrincipal = new javax.swing.JTextField();
+        try{
+            javax.swing.text.MaskFormatter data= new javax.swing.text.MaskFormatter("(##)#####-####");
+            txtFonePrincipal = new javax.swing.JFormattedTextField(data);
+        }catch (Exception e){
+
+        }
         lblEmail = new javax.swing.JLabel();
         txtEmail = new javax.swing.JTextField();
         checkPermitirAcesso = new javax.swing.JCheckBox();
@@ -74,9 +80,9 @@ public class NovoColaboradorJFrame extends javax.swing.JDialog {
 
         paneInformacoes.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        lblNome.setText("Nome");
+        lblNome.setText("<html><body><span>Nome<span style='color:red;'>*</span></span></body></html>");
 
-        lblFonePrincipal.setText("Fone Principal");
+        lblFonePrincipal.setText("<html><body><span>Fone Principal<span style='color:red;'>*</span></span></body></html>");
 
         txtFonePrincipal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -86,11 +92,13 @@ public class NovoColaboradorJFrame extends javax.swing.JDialog {
 
         lblEmail.setText("E-Mail");
 
+        checkPermitirAcesso.setSelected(true);
         checkPermitirAcesso.setText("Permitir que essa pessoa acesse o programa");
 
         paneTipoUsuario.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         buttonGroupTipoUsuario.add(rdAdministrador);
+        rdAdministrador.setSelected(true);
         rdAdministrador.setText("Administrador (acesso total ao programa)");
 
         buttonGroupTipoUsuario.add(rdAtendente);
@@ -105,7 +113,7 @@ public class NovoColaboradorJFrame extends javax.swing.JDialog {
                 .addGroup(paneTipoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(rdAdministrador)
                     .addComponent(rdAtendente))
-                .addContainerGap(80, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         paneTipoUsuarioLayout.setVerticalGroup(
             paneTipoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -119,16 +127,17 @@ public class NovoColaboradorJFrame extends javax.swing.JDialog {
 
         lblTipo.setText("Tipo");
 
-        lblLogin.setText("Login:");
+        lblLogin.setText("<html><body><span>Login<span style='color:red;'>*</span></span></body></html>:");
 
         lblDicaLogin.setText("(Até 20 dígitos)");
 
-        lblSenha.setText("Senha:");
+        lblSenha.setText("<html><body><span>Senha<span style='color:red;'>*</span></span></body></html>:");
 
-        lblRepeatSenha.setText("Confirmar Senha:");
+        lblRepeatSenha.setText("<html><body><span>Confirmar Senha<span style='color:red;'>*</span></span></body></html>");
 
         lblDicaSenha.setText("(Até 12 dígitos)");
 
+        checkUsuarioAtivo.setSelected(true);
         checkUsuarioAtivo.setText("Usuário Ativo");
 
         javax.swing.GroupLayout paneInformacoesLayout = new javax.swing.GroupLayout(paneInformacoes);
@@ -138,40 +147,38 @@ public class NovoColaboradorJFrame extends javax.swing.JDialog {
             .addGroup(paneInformacoesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(paneInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblSenha)
-                    .addComponent(lblLogin)
-                    .addComponent(lblFonePrincipal)
-                    .addComponent(lblNome)
+                    .addComponent(lblSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblFonePrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblTipo))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(paneInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(paneInformacoesLayout.createSequentialGroup()
-                        .addGroup(paneInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(paneInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(paneInformacoesLayout.createSequentialGroup()
-                                .addComponent(lblDicaLogin)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(paneInformacoesLayout.createSequentialGroup()
-                                .addComponent(lblRepeatSenha)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtRepeatSenha))))
                     .addComponent(txtNome)
                     .addComponent(checkPermitirAcesso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(paneTipoUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(paneInformacoesLayout.createSequentialGroup()
-                        .addGroup(paneInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(checkUsuarioAtivo)
-                            .addComponent(lblDicaSenha))
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(paneInformacoesLayout.createSequentialGroup()
                         .addComponent(txtFonePrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblEmail)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtEmail)))
+                        .addComponent(txtEmail))
+                    .addGroup(paneInformacoesLayout.createSequentialGroup()
+                        .addGroup(paneInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(checkUsuarioAtivo)
+                            .addComponent(lblDicaSenha)
+                            .addGroup(paneInformacoesLayout.createSequentialGroup()
+                                .addGroup(paneInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(paneInformacoesLayout.createSequentialGroup()
+                                        .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(lblRepeatSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(paneInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblDicaLogin)
+                                    .addComponent(txtRepeatSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         paneInformacoesLayout.setVerticalGroup(
@@ -179,11 +186,11 @@ public class NovoColaboradorJFrame extends javax.swing.JDialog {
             .addGroup(paneInformacoesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(paneInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblNome)
+                    .addComponent(lblNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(paneInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblFonePrincipal)
+                    .addComponent(lblFonePrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtFonePrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblEmail)
                     .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -195,13 +202,13 @@ public class NovoColaboradorJFrame extends javax.swing.JDialog {
                     .addComponent(paneTipoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(16, 16, 16)
                 .addGroup(paneInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblLogin)
+                    .addComponent(lblLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblDicaLogin))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(paneInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblSenha)
-                    .addComponent(lblRepeatSenha)
+                    .addComponent(lblSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblRepeatSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtRepeatSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
