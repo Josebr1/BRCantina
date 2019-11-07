@@ -8,8 +8,12 @@ package br.com.cruzeiro.ads.brcantina.views;
 
 import br.com.cruzeiro.ads.brcantina.controllers.UserController;
 import br.com.cruzeiro.ads.brcantina.controllers.interfaces.IUserController;
+import br.com.cruzeiro.ads.brcantina.exceptions.RequiredFieldException;
 import br.com.cruzeiro.ads.brcantina.models.Usuario;
 import br.com.cruzeiro.ads.brcantina.models.enums.TipoUsuario;
+import br.com.cruzeiro.ads.brcantina.validations.Validator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -264,13 +268,30 @@ public class NovoColaboradorJFrame extends javax.swing.JDialog {
         Usuario u = new Usuario();
         u.setNome(txtNome.getText());
         u.setEmail(txtEmail.getText());
+        u.setFone(txtFonePrincipal.getText());
         u.setTemAcessoAoSistema(checkPermitirAcesso.isSelected());
         u.setTipoUsuario(TipoUsuario.ADMINISTRADOR);
         u.setLogin(txtLogin.getText());
         u.setSenha(String.valueOf(txtSenha.getPassword()));
         u.setAtivo(checkUsuarioAtivo.isSelected());
         
-        String s = u.getSenha();
+        try {
+            if(Validator.validateForNulls(u)) {
+                
+            }
+                String s = u.getSenha();
+        } catch (RequiredFieldException ex) {
+            Logger.getLogger(NovoColaboradorJFrame.class.getName()).log(Level.SEVERE, null, ex);
+            ex.notifyUserWithToast();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(NovoColaboradorJFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchFieldException ex) {
+            Logger.getLogger(NovoColaboradorJFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(NovoColaboradorJFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        u.validate();
         
         this.mUserController.cadastrar(u);
         

@@ -8,6 +8,7 @@ package br.com.cruzeiro.ads.brcantina.views;
 import br.com.cruzeiro.ads.brcantina.controllers.UserController;
 import br.com.cruzeiro.ads.brcantina.dao.UsuarioDAO;
 import br.com.cruzeiro.ads.brcantina.dao.interfaces.IUsuarioDAO;
+import br.com.cruzeiro.ads.brcantina.exceptions.ExceptionsHandler;
 import br.com.cruzeiro.ads.brcantina.utils.InternalFrameUtils;
 import br.com.cruzeiro.ads.brcantina.views.internalframe.CaixaInterFrame;
 import br.com.cruzeiro.ads.brcantina.views.internalframe.CategoriaProdutoInterFrame;
@@ -49,6 +50,9 @@ public class Principal extends javax.swing.JFrame {
      */
     public Principal() {
         log.info("Init View Principal");
+        
+        Thread.setDefaultUncaughtExceptionHandler(new ExceptionsHandler());
+        
         initComponents();
         initObjetos();
         initControllers();

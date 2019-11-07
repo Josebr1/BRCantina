@@ -1,18 +1,30 @@
 package br.com.cruzeiro.ads.brcantina.models;
 
+import br.com.cruzeiro.ads.brcantina.annotations.Required;
+import br.com.cruzeiro.ads.brcantina.exceptions.ValidateException;
+import br.com.cruzeiro.ads.brcantina.interfaces.Validator;
 import br.com.cruzeiro.ads.brcantina.models.enums.TipoUsuario;
 import br.com.cruzeiro.ads.brcantina.utils.PasswordUtils;
+import com.mysql.cj.util.StringUtils;
 import java.util.UUID;
 
-public class Usuario {
+public class Usuario implements Validator{
     
     private UUID idUsuario;
+    @Required
     private String nome;
     private String email;
+    @Required
+    private String fone;
+    @Required
     private boolean temAcessoAoSistema;
+    @Required
     private String login;
+    @Required
     private String senha;
+    @Required
     private boolean ativo;
+    @Required
     private TipoUsuario tipoUsuario;
 
     public UUID getIdUsuario() {
@@ -38,6 +50,16 @@ public class Usuario {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public String getFone() {
+        return fone;
+    }
+
+    public void setFone(String fone) {
+        this.fone = fone;
+    }
+    
+    
 
     public boolean isTemAcessoAoSistema() {
         return temAcessoAoSistema;
@@ -78,5 +100,17 @@ public class Usuario {
     public void setTipoUsuario(TipoUsuario tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
     }
-    
+
+    /**
+     *
+     * @throws ValidateException
+     */
+    @Override
+    public void validate() {
+        if (StringUtils.isNullOrEmpty(nome) || StringUtils.isNullOrEmpty(login) || StringUtils.isNullOrEmpty(fone)) {
+            
+                //throw new ValidateException("Os campos (*) são obrigatorios!");
+            
+        }
+    }
 }
