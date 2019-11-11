@@ -19,22 +19,11 @@ public class DBUtils {
     private static final String PASSWORD = "root";
     
     public static Connection getConnection() throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException{
-        //Class.forName("com.mysql.jdbc.Driver").newInstance();
+        Class.forName("org.h2.Driver").newInstance();
         String stringConexao = new StringBuilder()
-                .append("jdbc:mysql://")
-                .append(HOST)
-                .append(":")
-                .append(PORT)
-                .append("/")
-                .append(DATABASE)
-                .append("?user=")
-                .append(USER)
-                .append("&password=")
-                .append(PASSWORD)
-                .append("&useSSL=true")
-                .append("&serverTimezone=UTC").toString();
+                .append("jdbc:h2:~/brcantina").toString();
         Logger.getLogger(DBUtils.class.getName()).log(Level.INFO, stringConexao);
-        Connection connection = DriverManager.getConnection(stringConexao);
+        Connection connection = DriverManager.getConnection(stringConexao, USER, PASSWORD);
         return connection;
 
     }
