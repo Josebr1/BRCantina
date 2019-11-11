@@ -43,7 +43,7 @@ public class UsuarioDAO implements IUsuarioDAO{
             String sql = "INSERT INTO usuario(id_usuario, nome, email, tem_acesso_programa, login, senha, ativo, fk_tipo_usuario) VALUES(?, ?, ?, ?, ?, ?, ?, ?);";
             
             PreparedStatement statement = DBUtils.getPreparedStatement(mConnection, sql);
-            statement.setObject(1, UUID.randomUUID().toString());
+            statement.setObject(1, UUID.randomUUID());
             statement.setString(2, usuario.getNome());
             statement.setString(3, usuario.getEmail());
             statement.setBoolean(4, usuario.isTemAcessoAoSistema());

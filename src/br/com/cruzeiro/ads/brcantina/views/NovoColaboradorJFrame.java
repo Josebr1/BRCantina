@@ -68,9 +68,7 @@ public class NovoColaboradorJFrame extends javax.swing.JDialog {
         txtLogin = new javax.swing.JTextField();
         lblDicaLogin = new javax.swing.JLabel();
         lblSenha = new javax.swing.JLabel();
-        lblRepeatSenha = new javax.swing.JLabel();
         txtSenha = new javax.swing.JPasswordField();
-        txtRepeatSenha = new javax.swing.JPasswordField();
         lblDicaSenha = new javax.swing.JLabel();
         checkUsuarioAtivo = new javax.swing.JCheckBox();
         btnVoltar = new javax.swing.JButton();
@@ -114,7 +112,7 @@ public class NovoColaboradorJFrame extends javax.swing.JDialog {
                 .addGroup(paneTipoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(rdAdministrador)
                     .addComponent(rdAtendente))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(76, Short.MAX_VALUE))
         );
         paneTipoUsuarioLayout.setVerticalGroup(
             paneTipoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -133,8 +131,6 @@ public class NovoColaboradorJFrame extends javax.swing.JDialog {
         lblDicaLogin.setText("(Até 20 dígitos)");
 
         lblSenha.setText("<html><body><span>Senha<span style='color:red;'>*</span></span></body></html>:");
-
-        lblRepeatSenha.setText("<html><body><span>Confirmar Senha<span style='color:red;'>*</span></span></body></html>");
 
         lblDicaSenha.setText("(Até 12 dígitos)");
 
@@ -169,16 +165,11 @@ public class NovoColaboradorJFrame extends javax.swing.JDialog {
                             .addComponent(checkUsuarioAtivo)
                             .addComponent(lblDicaSenha)
                             .addGroup(paneInformacoesLayout.createSequentialGroup()
-                                .addGroup(paneInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(paneInformacoesLayout.createSequentialGroup()
-                                        .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(lblRepeatSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(paneInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
+                                    .addComponent(txtSenha))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(paneInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblDicaLogin)
-                                    .addComponent(txtRepeatSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(lblDicaLogin)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -209,9 +200,7 @@ public class NovoColaboradorJFrame extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(paneInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblRepeatSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtRepeatSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblDicaSenha)
                 .addGap(18, 18, 18)
@@ -291,10 +280,6 @@ public class NovoColaboradorJFrame extends javax.swing.JDialog {
         } catch (RequiredFieldException ex) {
             Logger.getLogger(NovoColaboradorJFrame.class.getName()).log(Level.SEVERE, null, ex);
             ex.notifyUserWithToast();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(NovoColaboradorJFrame.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoSuchFieldException ex) {
-            Logger.getLogger(NovoColaboradorJFrame.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
             Logger.getLogger(NovoColaboradorJFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -353,7 +338,6 @@ public class NovoColaboradorJFrame extends javax.swing.JDialog {
     private javax.swing.JLabel lblFonePrincipal;
     private javax.swing.JLabel lblLogin;
     private javax.swing.JLabel lblNome;
-    private javax.swing.JLabel lblRepeatSenha;
     private javax.swing.JLabel lblSenha;
     private javax.swing.JLabel lblTipo;
     private javax.swing.JPanel paneInformacoes;
@@ -364,7 +348,6 @@ public class NovoColaboradorJFrame extends javax.swing.JDialog {
     private javax.swing.JTextField txtFonePrincipal;
     private javax.swing.JTextField txtLogin;
     private javax.swing.JTextField txtNome;
-    private javax.swing.JPasswordField txtRepeatSenha;
     private javax.swing.JPasswordField txtSenha;
     // End of variables declaration//GEN-END:variables
 

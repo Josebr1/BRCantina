@@ -1,5 +1,7 @@
 package br.com.cruzeiro.ads.brcantina.models;
 
+import br.com.cruzeiro.ads.brcantina.annotations.Email;
+import br.com.cruzeiro.ads.brcantina.annotations.Password;
 import br.com.cruzeiro.ads.brcantina.annotations.Required;
 import br.com.cruzeiro.ads.brcantina.exceptions.ValidateException;
 import br.com.cruzeiro.ads.brcantina.interfaces.Validator;
@@ -13,6 +15,7 @@ public class Usuario implements Validator{
     private UUID idUsuario;
     @Required
     private String nome;
+    @Email
     private String email;
     @Required
     private String fone;
@@ -21,6 +24,7 @@ public class Usuario implements Validator{
     @Required
     private String login;
     @Required
+    @Password
     private String senha;
     @Required
     private boolean ativo;

@@ -97,19 +97,12 @@
                               <Component id="checkUsuarioAtivo" min="-2" max="-2" attributes="0"/>
                               <Component id="lblDicaSenha" min="-2" max="-2" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="txtLogin" min="-2" pref="141" max="-2" attributes="0"/>
-                                      <Group type="102" attributes="0">
-                                          <Component id="txtSenha" min="-2" pref="106" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="lblRepeatSenha" min="-2" max="-2" attributes="0"/>
-                                      </Group>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="txtLogin" pref="141" max="32767" attributes="0"/>
+                                      <Component id="txtSenha" max="32767" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="lblDicaLogin" min="-2" max="-2" attributes="0"/>
-                                      <Component id="txtRepeatSenha" min="-2" pref="109" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="lblDicaLogin" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -150,9 +143,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lblSenha" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblRepeatSenha" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txtSenha" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtRepeatSenha" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="lblDicaSenha" min="-2" max="-2" attributes="0"/>
@@ -215,7 +206,7 @@
                           <Component id="rdAdministrador" min="-2" max="-2" attributes="0"/>
                           <Component id="rdAtendente" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="76" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -273,14 +264,7 @@
             <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;body&gt;&lt;span&gt;Senha&lt;span style=&apos;color:red;&apos;&gt;*&lt;/span&gt;&lt;/span&gt;&lt;/body&gt;&lt;/html&gt;:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="lblRepeatSenha">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;body&gt;&lt;span&gt;Confirmar Senha&lt;span style=&apos;color:red;&apos;&gt;*&lt;/span&gt;&lt;/span&gt;&lt;/body&gt;&lt;/html&gt;"/>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JPasswordField" name="txtSenha">
-        </Component>
-        <Component class="javax.swing.JPasswordField" name="txtRepeatSenha">
         </Component>
         <Component class="javax.swing.JLabel" name="lblDicaSenha">
           <Properties>
