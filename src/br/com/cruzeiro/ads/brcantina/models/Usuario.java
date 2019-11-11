@@ -31,6 +31,16 @@ public class Usuario implements Validator{
     @Required
     private TipoUsuario tipoUsuario;
 
+    public Usuario(){}
+
+    public Usuario(String nome, String email, String login, boolean ativo, TipoUsuario tipoUsuario) {
+        this.nome = nome;
+        this.email = email;
+        this.login = login;
+        this.ativo = ativo;
+        this.tipoUsuario = tipoUsuario;
+    }
+
     public UUID getIdUsuario() {
         return idUsuario;
     }

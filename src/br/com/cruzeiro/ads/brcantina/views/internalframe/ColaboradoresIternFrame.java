@@ -5,7 +5,13 @@
  */
 package br.com.cruzeiro.ads.brcantina.views.internalframe;
 
+import br.com.cruzeiro.ads.brcantina.controllers.UserController;
+import br.com.cruzeiro.ads.brcantina.controllers.interfaces.IUserController;
+import br.com.cruzeiro.ads.brcantina.models.Usuario;
 import br.com.cruzeiro.ads.brcantina.views.NovoColaboradorJFrame;
+
+import javax.swing.table.DefaultTableModel;
+import java.util.List;
 
 /**
  *
@@ -13,11 +19,18 @@ import br.com.cruzeiro.ads.brcantina.views.NovoColaboradorJFrame;
  */
 public class ColaboradoresIternFrame extends javax.swing.JInternalFrame {
 
+    private IUserController mUserController;
+
     /**
      * Creates new form ColaboradoresIternFrame
      */
     public ColaboradoresIternFrame() {
         initComponents();
+        initControllers();
+    }
+
+    private void initControllers() {
+        this.mUserController = new UserController();
     }
 
     /**
@@ -38,6 +51,23 @@ public class ColaboradoresIternFrame extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setTitle("Colaboradores");
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameOpened(evt);
+            }
+        });
 
         paneAcoes.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -79,17 +109,6 @@ public class ColaboradoresIternFrame extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
-        tableColaboradores.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
         scrolPaneColaboradores.setViewportView(tableColaboradores);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -119,6 +138,22 @@ public class ColaboradoresIternFrame extends javax.swing.JInternalFrame {
         colaboradorJFrame.setVisible(true);
         colaboradorJFrame.setLocationRelativeTo(this);
     }//GEN-LAST:event_btnNovoActionPerformed
+
+    private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
+
+        List<Usuario> all = this.mUserController.all();
+
+        DefaultTableModel model = new DefaultTableModel(new String [] {
+                "Nome", "Email", "Login", "Ativo", "Tipo Usuário"
+        }, 0);
+
+
+        for (Usuario u : all) {
+            model.addRow(new Object[]{u.getNome(), u.getEmail(), u.getLogin(), true, true});
+        }
+
+        tableColaboradores.setModel(model);
+    }//GEN-LAST:event_formInternalFrameOpened
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

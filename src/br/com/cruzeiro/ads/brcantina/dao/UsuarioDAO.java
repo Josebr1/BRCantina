@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -53,6 +55,33 @@ public class UsuarioDAO implements IUsuarioDAO{
             statement.setInt(8, 1);
             
             statement.execute();
+        } finally {
+            if (mConnection != null)
+                mConnection.close();
+        }
+    }
+
+    @Override
+    public List<Usuario> all() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+        ResultSet resultSet;
+        List<Usuario> usuarios = new ArrayList<>();
+        try {
+            mConnection = DBUtils.getConnection();
+            String sql = "select * from usuario as user inner join tipo_usuario tp on tp.id_tipo_usuario = user.fk_tipo_usuario;";
+            
+            PreparedStatement statement = DBUtils.getPreparedStatement(mConnection, sql);
+
+            resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                   usuarios.add(new Usuario(
+                           resultSet.getString("nome"),
+                           resultSet.getString("email"),
+                           resultSet.getString("login"),
+                           resultSet.getBoolean("ativo"),
+                           TipoUsuario.ADMINISTRADOR));
+            }
+            return usuarios;
         } finally {
             if (mConnection != null)
                 mConnection.close();
