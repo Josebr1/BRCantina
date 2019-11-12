@@ -2,23 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Fontes/BRCantina/src/br/com/cruzeiro/ads/brcantina/views/NovaContaJFrame.java</file>
-            <file>file:/C:/Fontes/BRCantina/src/br/com/cruzeiro/ads/brcantina/views/internalframe/CaixaInterFrame.java</file>
-            <file>file:/C:/Fontes/BRCantina/src/br/com/cruzeiro/ads/brcantina/views/ContasPagarJFrame.java</file>
-            <file>file:/C:/Fontes/BRCantina/src/br/com/cruzeiro/ads/brcantina/views/NovoProdutoJFrame.java</file>
-            <file>file:/C:/Fontes/BRCantina/src/br/com/cruzeiro/ads/brcantina/views/Principal.java</file>
-            <file>file:/C:/Fontes/BRCantina/src/br/com/cruzeiro/ads/brcantina/views/ContasReceberJFrame.java</file>
-            <file>file:/C:/Fontes/BRCantina/src/br/com/cruzeiro/ads/brcantina/views/NovaContaReceberJFrame.java</file>
-            <file>file:/C:/Fontes/BRCantina/src/br/com/cruzeiro/ads/brcantina/utils/InternalFrameUtils.java</file>
-            <file>file:/C:/Fontes/BRCantina/src/br/com/cruzeiro/ads/brcantina/views/internalframe/HistoricoPedidosInterFrame.java</file>
-            <file>file:/C:/Fontes/BRCantina/src/br/com/cruzeiro/ads/brcantina/views/CadastroUsuarioJFrame.java</file>
-            <file>file:/C:/Fontes/BRCantina/src/br/com/cruzeiro/ads/brcantina/views/RelatorioJFrame.java</file>
-            <file>file:/C:/Fontes/BRCantina/src/br/com/cruzeiro/ads/brcantina/views/NovoClienteJFrame.java</file>
-            <file>file:/C:/Fontes/BRCantina/src/br/com/cruzeiro/ads/brcantina/views/CategoriaContasJFrame.java</file>
-            <file>file:/C:/Fontes/BRCantina/src/br/com/cruzeiro/ads/brcantina/views/NovaContaPagarJFrame.java</file>
-            <file>file:/C:/Fontes/BRCantina/src/br/com/cruzeiro/ads/brcantina/views/ResultadoFinalCaixaJFrame.java</file>
-            <file>file:/C:/Fontes/BRCantina/src/br/com/cruzeiro/ads/brcantina/views/CaixaJFrame.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
