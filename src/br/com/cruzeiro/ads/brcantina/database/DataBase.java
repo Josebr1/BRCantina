@@ -1,19 +1,23 @@
 package br.com.cruzeiro.ads.brcantina.database;
 
 import br.com.cruzeiro.ads.brcantina.utils.DBUtils;
+import br.com.cruzeiro.ads.brcantina.views.NovoColaboradorJFrame;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DataBase {
-    private List<String> tableSQL;
     private Connection mConnection = null;
     
     public DataBase(){
-        
-        tableSQL = new ArrayList<>();
+    }
+    
+    private List<String> initializeTables() {
+        List<String> tableSQL = new ArrayList<>();
         
         tableSQL.add(
                 "CREATE TABLE IF NOT EXISTS `categoria` (\n" +
@@ -207,16 +211,34 @@ public class DataBase {
                 "  PRIMARY KEY (`id_conta_receber`),\n" +
                 "  FOREIGN KEY (`fk_foma_pagamento`) REFERENCES `foma_pagamento` (`id_foma_pagamento`)\n" +
                 ") ENGINE=InnoDB DEFAULT CHARSET=utf8;");
+        
+        return tableSQL;
+    }
+    
+    private List<String> populator() {
+        
+        List<String> list = new ArrayList<>();
+        
+        list.add("INSERT INTO tipo_usuario(descricao) VALUES('ADMINISTRADOR')");
+        list.add("INSERT INTO tipo_usuario(descricao) VALUES('ATENDENTE')");
+        
+        return list;
     }
     
     public void initialize() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalAccessException, SQLException, SQLException{
         
         try {
             mConnection = DBUtils.getConnection();
+            Logger.getLogger(DataBase.class.getName()).log(Level.INFO, "*********** initialize ************\n\n");
 
-
-            for(String tableName : tableSQL) {
-                PreparedStatement ps = DBUtils.getPreparedStatement(mConnection, tableName);
+            for(String table : initializeTables()) {
+                PreparedStatement ps = DBUtils.getPreparedStatement(mConnection, table);
+                Logger.getLogger(DataBase.class.getName()).log(Level.INFO, table);
+                ps.execute();
+            }
+            
+            for(String sqlQuery : populator()) {
+                PreparedStatement ps = DBUtils.getPreparedStatement(mConnection, sqlQuery);
                 ps.execute();
             }
             

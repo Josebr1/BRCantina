@@ -14,6 +14,7 @@ import br.com.cruzeiro.ads.brcantina.models.enums.TipoUsuario;
 import br.com.cruzeiro.ads.brcantina.validations.Validator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -274,20 +275,16 @@ public class NovoColaboradorJFrame extends javax.swing.JDialog {
         
         try {
             if(Validator.validateForNulls(u)) {
-                
+                this.mUserController.cadastrar(u);
+                JOptionPane.showMessageDialog(rootPane, "Usuario criado com sucesso!");
+                this.dispose();
             }
-                String s = u.getSenha();
         } catch (RequiredFieldException ex) {
             Logger.getLogger(NovoColaboradorJFrame.class.getName()).log(Level.SEVERE, null, ex);
             ex.notifyUserWithToast();
         } catch (IllegalAccessException ex) {
             Logger.getLogger(NovoColaboradorJFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        u.validate();
-        
-        this.mUserController.cadastrar(u);
-        
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     /**
