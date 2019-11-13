@@ -1,0 +1,9 @@
+Manifest-Version: 1.4
+Main-Class: br.com.cruzeiro.ads.brcantina.views.Principal
+
+
+Name: org/apache/log4j/
+Implementation-Title: log4j
+Implementation-Version: 1.2.17
+Implementation-Vendor: "Apache Software Foundation"
+
