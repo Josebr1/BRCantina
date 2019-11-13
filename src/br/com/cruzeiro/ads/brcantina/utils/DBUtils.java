@@ -24,6 +24,7 @@ public class DBUtils {
                 .append("jdbc:h2:~/brcantina").toString();
         Logger.getLogger(DBUtils.class.getName()).log(Level.INFO, stringConexao);
         Connection connection = DriverManager.getConnection(stringConexao, USER, PASSWORD);
+        
         return connection;
 
     }
