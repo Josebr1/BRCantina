@@ -1,10 +1,9 @@
 #!/bin/bash
 #1.4
 
-export ANT_HOME=/
-export PATH=$ANT_HOME/bin:$PATH
 
-ant -buildfile jbuild.xml main
+
+ant -buildfile build.xml run
 if [ $? -eq 1]; then
 echo "Failed on Build"
 exit 1
