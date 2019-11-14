@@ -1,72 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="BRCantina" default="main" basedir=".">
+<project name="BRCantina" default="run" basedir=".">
     <description>Builds, tests, and runs the project BRCantina.</description>
 
     <property file="pacote.properties" />
     
-    <target name="init">
-        
-        <echo>Init</echo>
+    <target name="pre-build-clean">
+        <echo>Delete directories</echo>
         
         <delete dir="${dist.dir.brcantina}"/>
+        <delete dir="${caminho.pacote}"/>
+
         <mkdir dir="${dist.dir.brcantina}"/>
         <mkdir dir="${classes.dir.brcantina}"/>
         
         <delete dir="${dist.dir.jar}"/>
         <mkdir dir="${dist.dir.jar}"/>
-        
-        <copy todir="${classes.dir.brcantina}">
-            <fileset dir="${src.dir.brcantina}">
-                <exclude name="**/*.java"/>
-            </fileset>
-            <!--fileset dir="${src.dir.resources}"/-->
-            <!--fileset dir="${commons}" />
-            <fileset dir="${log4j}" />
-            <fileset dir="${mysql}" />
-            <fileset dir="${swingx}" /-->
-        </copy>
-        
     </target>
-    
 
-    <patch id="compile.path">
-        <fileset dir="${libs.dir}">></fileset>
-    </patch>
+    <path id="build.classpath">
+        <fileset  dir="libs">
+            <include name="**/*.jar" />
+        </fileset>
+    </path>
 
-    <target name="compile" depends="init" description="compile the source">
-        <echo>Compilando o programa BRCanina</echo>
-        <javac includeantruntime="false" srcdir="${src.dir.brcantina}" destdir="${classes.dir.brcantina}" encoding="utf-8" target="1.8" source="1.8" nowarn="true" classpathref="compile.path">
-            <!--classpath refid="build-classpath" /-->
+    <target name="compile" depends="pre-build-clean" description="compile the source">
+        <echo>Project build running...</echo>
+        <javac srcdir="${src.dir.brcantina}" destdir="${classes.dir.brcantina}" encoding="utf-8" target="1.8" source="1.8">
+           <src path="src"/>
+            <classpath refid="build.classpath"/>
         </javac>
-        <classpath>
-            <fileset dir="${libs.dir}">
-                <include name="**/*.jar" />
-            </fileset>
-        </classpath>
     </target>
     
-    <target name="dist" depends="compile" description="package, output to JAR">
-        <echo>Gerando o .jar</echo>
-        
-        <jar jarfile="${dist.dir.jar}\${package.jar.name.brcantina}" basedir="${classes.dir.brcantina}" manifest="${meta.inf.dir}\MANIFEST.MF}">
+    <target name="package-dist" depends="compile" description="package, output to JAR">
+        <echo>Generating distribution package</echo>
+        <echo>Type -> .jar</echo>
+        <jar jarfile="${dist.dir.jar}\${package.jar.name.brcantina}" basedir="${classes.dir.brcantina}">
             <zipgroupfileset dir="${libs.dir}" includes="**/*.jar"/>
             <manifest>
-                <attribute name="Main-Class" value="${projectName}/BRCantina"/>
+                <attribute name="Main-Class" value="br.com.cruzeiro.ads.brcantina.views.Principal"/>
             </manifest>
         </jar>
     </target>
-    
-    <target name="target-brcantina" depends="init, dist">
+
+    <target name="pos-build-clean">
+        <echo>Delete directories pos build</echo>
+
+        <delete dir="${build.dir}"/>
+        <delete dir="${dist.dir}"/>
+        <delete dir="${out.dir}"/>
+        <delete dir="${dist.dir.jar}"/>
+    </target>
+
+    <target name="copy-package">
         <echo>*********************************</echo>
         <echo>Copiando o jar</echo>
         <echo>${caminho.pacote}/${package.jar.name.brcantina}</echo>
+        <copy todir="${caminho.pacote}">
+            <fileset dir="${dist.dir.jar}"/>
+        </copy>
         <echo>*********************************</echo>
-        
-        <delete dir="${dist.dir.jar}"/>
-        <delete dir="${dist.dir.brcantina}"/>
-        <delete dir="${dist.dir}"/>
-        
-        <echo>Finalizando....</echo>
+    </target>
+
+    <target name="run" depends="pre-build-clean, package-dist, copy-package, pos-build-clean">
+        <echo>Finish....</echo>
     </target>
 </project>
