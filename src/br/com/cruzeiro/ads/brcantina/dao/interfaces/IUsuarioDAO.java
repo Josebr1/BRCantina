@@ -8,4 +8,6 @@ public interface IUsuarioDAO {
     boolean isFirstUserCreate() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException;
     List<Usuario> all() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException;
     void insert(Usuario usuario) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException;
+    void update(Usuario usuario) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException;
+    Usuario getUserByEmail(String email) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException;
 }

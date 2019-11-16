@@ -8,10 +8,13 @@ package br.com.cruzeiro.ads.brcantina.views.internalframe;
 import br.com.cruzeiro.ads.brcantina.controllers.UserController;
 import br.com.cruzeiro.ads.brcantina.controllers.interfaces.IUserController;
 import br.com.cruzeiro.ads.brcantina.models.Usuario;
+import br.com.cruzeiro.ads.brcantina.models.enums.TipoUsuario;
 import br.com.cruzeiro.ads.brcantina.views.NovoColaboradorJFrame;
 
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
+import javax.swing.JOptionPane;
+import org.h2.util.StringUtils;
 
 /**
  *
@@ -20,6 +23,7 @@ import java.util.List;
 public class ColaboradoresIternFrame extends javax.swing.JInternalFrame {
 
     private IUserController mUserController;
+    private String UUID;
 
     /**
      * Creates new form ColaboradoresIternFrame
@@ -45,7 +49,6 @@ public class ColaboradoresIternFrame extends javax.swing.JInternalFrame {
         paneAcoes = new javax.swing.JPanel();
         btnNovo = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
-        txtPesquisarColaboradores = new javax.swing.JTextField();
         scrolPaneColaboradores = new javax.swing.JScrollPane();
         tableColaboradores = new javax.swing.JTable();
 
@@ -79,15 +82,19 @@ public class ColaboradoresIternFrame extends javax.swing.JInternalFrame {
         });
 
         btnEditar.setText("Editar");
+        btnEditar.setEnabled(false);
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout paneAcoesLayout = new javax.swing.GroupLayout(paneAcoes);
         paneAcoes.setLayout(paneAcoesLayout);
         paneAcoesLayout.setHorizontalGroup(
             paneAcoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneAcoesLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(txtPesquisarColaboradores, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(481, Short.MAX_VALUE)
                 .addComponent(btnEditar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnNovo)
@@ -96,19 +103,29 @@ public class ColaboradoresIternFrame extends javax.swing.JInternalFrame {
         paneAcoesLayout.setVerticalGroup(
             paneAcoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneAcoesLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(paneAcoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(paneAcoesLayout.createSequentialGroup()
-                        .addComponent(txtPesquisarColaboradores)
-                        .addGap(2, 2, 2))
-                    .addGroup(paneAcoesLayout.createSequentialGroup()
-                        .addGap(0, 13, Short.MAX_VALUE)
-                        .addGroup(paneAcoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnNovo)
-                            .addComponent(btnEditar))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(paneAcoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnNovo)
+                    .addComponent(btnEditar))
                 .addContainerGap())
         );
 
+        tableColaboradores.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Nome", "Email", "Login", "Ativo", "Tipo Usuário"
+            }
+        ));
+        tableColaboradores.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableColaboradoresMouseClicked(evt);
+            }
+        });
         scrolPaneColaboradores.setViewportView(tableColaboradores);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -125,7 +142,7 @@ public class ColaboradoresIternFrame extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(paneAcoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(19, 19, 19)
                 .addComponent(scrolPaneColaboradores, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 9, Short.MAX_VALUE))
         );
@@ -149,11 +166,30 @@ public class ColaboradoresIternFrame extends javax.swing.JInternalFrame {
 
 
         for (Usuario u : all) {
-            model.addRow(new Object[]{u.getNome(), u.getEmail(), u.getLogin(), true, true});
+            model.addRow(new Object[]{u.getNome(), u.getEmail(), u.getLogin(), u.isAtivo(), TipoUsuario.get(u.getTipoUsuario())});
         }
 
         tableColaboradores.setModel(model);
     }//GEN-LAST:event_formInternalFrameOpened
+
+    private void tableColaboradoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableColaboradoresMouseClicked
+        
+        btnEditar.setEnabled(true);
+        
+        DefaultTableModel model = (DefaultTableModel) tableColaboradores.getModel();
+        
+        int selectedRowIndex = tableColaboradores.getSelectedRow();
+        this.UUID = model.getValueAt(selectedRowIndex, 1).toString();
+        //JOptionPane.showMessageDialog(paneAcoes, model.getValueAt(selectedRowIndex, 1));
+    }//GEN-LAST:event_tableColaboradoresMouseClicked
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        if(!StringUtils.isNullOrEmpty(this.UUID)) {
+            NovoColaboradorJFrame colaboradorJFrame = new NovoColaboradorJFrame(this.UUID);
+            colaboradorJFrame.setVisible(true);
+            colaboradorJFrame.setLocationRelativeTo(this);
+        }
+    }//GEN-LAST:event_btnEditarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -162,6 +198,5 @@ public class ColaboradoresIternFrame extends javax.swing.JInternalFrame {
     private javax.swing.JPanel paneAcoes;
     private javax.swing.JScrollPane scrolPaneColaboradores;
     private javax.swing.JTable tableColaboradores;
-    private javax.swing.JTextField txtPesquisarColaboradores;
     // End of variables declaration//GEN-END:variables
 }

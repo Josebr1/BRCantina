@@ -11,8 +11,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class UsuarioDAO implements IUsuarioDAO{
 
@@ -27,10 +25,44 @@ public class UsuarioDAO implements IUsuarioDAO{
             String sql = "SELECT * FROM usuario WHERE usuario.fk_tipo_usuario = ?";
             
             PreparedStatement statement = DBUtils.getPreparedStatement(mConnection, sql);
-            statement.setInt(1, TipoUsuario.get(TipoUsuario.ADMINISTRADOR));
+            statement.setInt(1, TipoUsuario.ADMINISTRADOR.getValue());
             
             resultSet = statement.executeQuery();
             return !resultSet.next();
+        } finally {
+            if (mConnection != null)
+                mConnection.close();
+        }
+    }
+    
+    @Override
+    public Usuario getUserByEmail(String email) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException{
+        ResultSet rs;
+        Usuario usuario;
+        try {
+            mConnection = DBUtils.getConnection();
+            String sql = "select * from usuario where email = ?;";
+            
+            PreparedStatement statement = DBUtils.getPreparedStatement(mConnection, sql);
+            statement.setString(1, email);
+
+            rs = statement.executeQuery();
+
+            while (rs.next()) {
+                   usuario = new Usuario();
+                   usuario.setIdUsuario((UUID)rs.getObject("id_usuario"));
+                   usuario.setNome(rs.getString("nome"));
+                   usuario.setEmail(rs.getString("email"));
+                   usuario.setFone(rs.getString("fone"));
+                   usuario.setTemAcessoAoSistema(rs.getBoolean("tem_acesso_programa"));
+                   usuario.setLogin(rs.getString("login"));
+                   usuario.setSenha(rs.getString("senha"));
+                   usuario.setAtivo(rs.getBoolean("ativo"));
+                   usuario.setTipoUsuario(TipoUsuario.get(rs.getInt("fk_tipo_usuario")));
+                   
+              return usuario;
+            }
+            return null;
         } finally {
             if (mConnection != null)
                 mConnection.close();
@@ -42,17 +74,41 @@ public class UsuarioDAO implements IUsuarioDAO{
         mConnection = DBUtils.getConnection();
         
         try {
-            String sql = "INSERT INTO usuario(id_usuario, nome, email, tem_acesso_programa, login, senha, ativo, fk_tipo_usuario) VALUES(?, ?, ?, ?, ?, ?, ?, ?);";
+            String sql = "INSERT INTO usuario(id_usuario, nome, email, fone, tem_acesso_programa, login, senha, ativo, fk_tipo_usuario) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?);";
             
             PreparedStatement statement = DBUtils.getPreparedStatement(mConnection, sql);
             statement.setObject(1, UUID.randomUUID());
             statement.setString(2, usuario.getNome());
             statement.setString(3, usuario.getEmail());
-            statement.setBoolean(4, usuario.isTemAcessoAoSistema());
-            statement.setString(5, usuario.getLogin());
-            statement.setString(6, usuario.getSenha());
-            statement.setBoolean(7, usuario.isAtivo());
-            statement.setInt(8, 1);
+            statement.setString(4, usuario.getFone());
+            statement.setBoolean(5, usuario.isTemAcessoAoSistema());
+            statement.setString(6, usuario.getLogin());
+            statement.setString(7, usuario.getSenha());
+            statement.setBoolean(8, usuario.isAtivo());
+            statement.setInt(9, usuario.getTipoUsuario().getValue());
+            
+            statement.execute();
+        } finally {
+            if (mConnection != null)
+                mConnection.close();
+        }
+    }
+    
+    @Override
+    public void update(Usuario usuario) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+        mConnection = DBUtils.getConnection();
+        
+        try {
+            String sql = "UPDATE usuario SET nome = ?, fone = ?, tem_acesso_programa = ?, ativo = ?, fk_tipo_usuario = ? WHERE id_usuario = ?;";
+            
+            PreparedStatement statement = DBUtils.getPreparedStatement(mConnection, sql);
+            
+            statement.setString(1, usuario.getNome());
+            statement.setString(2, usuario.getFone());
+            statement.setBoolean(3, usuario.isTemAcessoAoSistema());
+            statement.setBoolean(4, usuario.isAtivo());
+            statement.setInt(5, usuario.getTipoUsuario().getValue());
+            statement.setObject(6, UUID.randomUUID());
             
             statement.execute();
         } finally {

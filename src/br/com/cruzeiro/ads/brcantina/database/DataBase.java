@@ -18,25 +18,25 @@ public class DataBase {
     
     private List<String> initializeTables() {
         List<String> tableSQL = new ArrayList<>();
-        
+
         tableSQL.add(
                 "CREATE TABLE IF NOT EXISTS `categoria` (\n" +
                 "  `id_categoria` int(11) NOT NULL,\n" +
-                "  `descricao` varchar(45) DEFAULT NULL,\n" +
+                "  `descricao` varchar(45) NOT NULL UNIQUE,\n" +
                 "  PRIMARY KEY (`id_categoria`)\n" +
                 ") ENGINE=InnoDB DEFAULT CHARSET=utf8;");
         
         tableSQL.add(
                 "CREATE TABLE IF NOT EXISTS `categoria_conta` (\n" +
                 "  `id_tipo_conta` int(11) NOT NULL,\n" +
-                "  `descricao` varchar(45) DEFAULT NULL,\n" +
+                "  `descricao` varchar(45) NOT NULL UNIQUE,\n" +
                 "  PRIMARY KEY (`id_tipo_conta`)\n" +
                 ") ENGINE=InnoDB DEFAULT CHARSET=utf8;");
         
         tableSQL.add( 
                 "CREATE TABLE IF NOT EXISTS `tipo_usuario` (\n" +
                 "  `id_tipo_usuario` int(11) NOT NULL AUTO_INCREMENT,\n" +
-                "  `descricao` varchar(45) DEFAULT NULL,\n" +
+                "  `descricao` varchar(45) NOT NULL UNIQUE,\n" +
                 "  PRIMARY KEY (`id_tipo_usuario`)\n" +
                 ") ENGINE=InnoDB DEFAULT CHARSET=utf8;");
         
@@ -57,7 +57,7 @@ public class DataBase {
         tableSQL.add(
                 "CREATE TABLE IF NOT EXISTS `foma_pagamento` (\n" +
                 "  `id_foma_pagamento` int(11) NOT NULL,\n" +
-                "  `descricao` varchar(45) DEFAULT NULL,\n" +
+                "  `descricao` varchar(45) NOT NULL UNIQUE,\n" +
                 "  PRIMARY KEY (`id_foma_pagamento`)\n" +
                 ") ENGINE=InnoDB DEFAULT CHARSET=utf8;");
         
@@ -67,8 +67,8 @@ public class DataBase {
                 "  `nome` varchar(45) DEFAULT NULL,\n" +
                 "  `preco_custo` decimal(10,0) DEFAULT NULL,\n" +
                 "  `medida` enum('UN','KG','LT') DEFAULT NULL,\n" +
-                "  `cod_sistema` varchar(45) DEFAULT NULL,\n" +
-                "  `cod_personalizado` varchar(45) DEFAULT NULL,\n" +
+                "  `cod_sistema` varchar(45) NOT NULL UNIQUE,\n" +
+                "  `cod_personalizado` varchar(45) NOT NULL UNIQUE,\n" +
                 "  PRIMARY KEY (`id_insumo`)\n" +
                 ") ENGINE=InnoDB DEFAULT CHARSET=utf8;");
         
@@ -76,7 +76,8 @@ public class DataBase {
                 "CREATE TABLE IF NOT EXISTS `usuario` (\n" +
                 "  `id_usuario` binary(36) NOT NULL,\n" +
                 "  `nome` varchar(150) NOT NULL,\n" +
-                "  `email` varchar(100) NOT NULL,\n" +
+                "  `email` varchar(100) NOT NULL UNIQUE,\n" +
+                "  `fone` varchar(11) NOT NULL,\n" +
                 "  `tem_acesso_programa` tinyint(4) NOT NULL,\n" +
                 "  `login` varchar(45) NOT NULL,\n" +
                 "  `senha` longtext NOT NULL,\n" +
@@ -90,8 +91,8 @@ public class DataBase {
                 "CREATE TABLE IF NOT EXISTS `cliente` (\n" +
                 "  `id_cliente` int(11) NOT NULL,\n" +
                 "  `nome` varchar(150) DEFAULT NULL,\n" +
-                "  `documento` varchar(14) DEFAULT NULL,\n" +
-                "  `email` varchar(45) DEFAULT NULL,\n" +
+                "  `documento` varchar(14) NOT NULL UNIQUE,\n" +
+                "  `email` varchar(45) NOT NULL UNIQUE,\n" +
                 "  `data_nasciemento` datetime DEFAULT NULL,\n" +
                 "  `sexo` enum('MASCULINO','FEMININO') DEFAULT NULL,\n" +
                 "  `fone` varchar(11) DEFAULT NULL,\n" +
@@ -106,8 +107,8 @@ public class DataBase {
                 "  `nome` varchar(45) DEFAULT NULL,\n" +
                 "  `fone` varchar(45) DEFAULT NULL,\n" +
                 "  `email` varchar(45) DEFAULT NULL,\n" +
-                "  `documento` varchar(45) DEFAULT NULL,\n" +
-                "  `IERG` varchar(45) DEFAULT NULL,\n" +
+                "  `documento` varchar(45) NOT NULL UNIQUE,\n" +
+                "  `IERG` varchar(45) NOT NULL UNIQUE,\n" +
                 "  `fk_endereco` int(11) NOT NULL,\n" +
                 "  PRIMARY KEY (`id_fornecedor`),\n" +
                 "  FOREIGN KEY (`fk_endereco`) REFERENCES `endereco` (`id_endereco`)\n" +
@@ -120,7 +121,7 @@ public class DataBase {
                 "  `preco_custo` decimal(10,0) DEFAULT NULL,\n" +
                 "  `preco_venda` decimal(10,0) DEFAULT NULL,\n" +
                 "  `medida` enum('UN','KG','LT') DEFAULT NULL,\n" +
-                "  `codigo_pesonalizado` varchar(45) DEFAULT NULL,\n" +
+                "  `codigo_pesonalizado` varchar(45) NOT NULL UNIQUE,\n" +
                 "  `descricao` varchar(255) DEFAULT NULL,\n" +
                 "  `foto` longblob,\n" +
                 "  `fk_categoria_conta` int(11) NOT NULL,\n" +

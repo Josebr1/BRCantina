@@ -29,8 +29,11 @@ public class UserController implements IUserController{
     }
 
     @Override
-    public void cadastrar(Usuario usuario) {
+    public void insertAndUpdate(Usuario usuario) {
         try {
+            if (usuario.getIdUsuario() != null) {
+                this.mUsuarioDAO.update(usuario);
+            }
             this.mUsuarioDAO.insert(usuario);
         } catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException ex) {
             Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
@@ -45,6 +48,16 @@ public class UserController implements IUserController{
             Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return new ArrayList<>();
+    }
+    
+    @Override
+    public Usuario getUserByEmail(String email) {
+        try {
+            return this.mUsuarioDAO.getUserByEmail(email);
+        } catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
 }

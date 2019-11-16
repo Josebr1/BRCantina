@@ -4,22 +4,39 @@ package br.com.cruzeiro.ads.brcantina.models.enums;
  * @author jose.antonio
  */
 public enum TipoUsuario {
-    ADMINISTRADOR,
-    ATENDENTE;
+    ADMINISTRADOR(1),
+    ATENDENTE(2);
+
+    private final int value;
     
-    /**
-     * 
-     * @param tipoUsuario
-     * @return 
-     */
-    public static int get(TipoUsuario tipoUsuario) {
+    private TipoUsuario(int value) {
+        this.value = value;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public static TipoUsuario get(int tipoUsuario) {
+        switch(tipoUsuario){
+            case 1:
+                return TipoUsuario.ADMINISTRADOR;
+            case 2:
+                return ATENDENTE;
+            default:
+                return ADMINISTRADOR;
+        }
+    }
+
+
+    public static String get(TipoUsuario tipoUsuario) {
         switch(tipoUsuario){
             case ADMINISTRADOR:
-                return 1;
+                return "ADMINISTRADOR";
             case ATENDENTE:
-                return 2;
+                return "ATENDENTE";
             default:
-                return 1;
+                return "ADMINISTRADOR";
         }
     }
 }
