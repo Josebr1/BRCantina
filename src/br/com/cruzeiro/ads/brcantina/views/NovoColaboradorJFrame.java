@@ -8,10 +8,15 @@ package br.com.cruzeiro.ads.brcantina.views;
 
 import br.com.cruzeiro.ads.brcantina.controllers.UserController;
 import br.com.cruzeiro.ads.brcantina.controllers.interfaces.IUserController;
+import br.com.cruzeiro.ads.brcantina.core.Dialog;
 import br.com.cruzeiro.ads.brcantina.exceptions.RequiredFieldException;
 import br.com.cruzeiro.ads.brcantina.models.Usuario;
 import br.com.cruzeiro.ads.brcantina.models.enums.TipoUsuario;
 import br.com.cruzeiro.ads.brcantina.validations.Validator;
+import com.mysql.cj.util.StringUtils;
+
+import java.awt.event.WindowEvent;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -20,21 +25,57 @@ import javax.swing.JOptionPane;
  *
  * @author jose.antonio
  */
-public class NovoColaboradorJFrame extends javax.swing.JDialog {
+public class NovoColaboradorJFrame extends Dialog {
 
     /* CONTROLLERS */
     private IUserController mUserController;
+    private String mUUID = "";
+    private Usuario mUsuario = new Usuario();
     
     /** Creates new form CadastroUsuarioJFrame */
     public NovoColaboradorJFrame() {
+        init();
+    }
+    
+    public NovoColaboradorJFrame(String uuid) {
+        this.mUUID = uuid;
+        init();
+        CreateOrUpdate();
+    }
+    
+    private void init() {
         this.setModal(true);
         initComponents();
         this.initControllers();
         this.getRootPane().setDefaultButton(btnSalvar);
+
+        if(this.mUserController.primeiroAdm()) {
+            checkPermitirAcesso.setEnabled(false);
+            checkUsuarioAtivo.setEnabled(false);
+            rdAdministrador.setEnabled(false);
+            rdAtendente.setEnabled(false);
+        }
     }
+    
+    
     
     private void initControllers() {
         this.mUserController = new UserController();
+    }
+    
+    private void CreateOrUpdate(){
+        if (!StringUtils.isNullOrEmpty(mUUID)) {
+            mUsuario = this.mUserController.getUserByEmail(mUUID);
+            mUUID = mUsuario.getIdUsuario().toString();
+            txtEmail.setText(mUsuario.getEmail());
+            txtNome.setText(mUsuario.getNome());
+            txtFonePrincipal.setText(mUsuario.getFone());
+            checkPermitirAcesso.setSelected(mUsuario.isTemAcessoAoSistema());
+            checkUsuarioAtivo.setSelected(mUsuario.isAtivo());
+            
+            txtLogin.disable();
+            txtSenha.disable();
+        }
     }
 
     /** This method is called from within the constructor to
@@ -263,20 +304,20 @@ public class NovoColaboradorJFrame extends javax.swing.JDialog {
     }//GEN-LAST:event_btnVoltarActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        Usuario u = new Usuario();
-        u.setNome(txtNome.getText());
-        u.setEmail(txtEmail.getText());
-        u.setFone(txtFonePrincipal.getText());
-        u.setTemAcessoAoSistema(checkPermitirAcesso.isSelected());
-        u.setTipoUsuario(TipoUsuario.ADMINISTRADOR);
-        u.setLogin(txtLogin.getText());
-        u.setSenha(String.valueOf(txtSenha.getPassword()));
-        u.setAtivo(checkUsuarioAtivo.isSelected());
+        if(mUUID != null) mUsuario.setIdUsuario(UUID.fromString(mUUID));
+        mUsuario.setNome(txtNome.getText());
+        mUsuario.setEmail(txtEmail.getText());
+        mUsuario.setFone(txtFonePrincipal.getText());
+        mUsuario.setTemAcessoAoSistema(checkPermitirAcesso.isSelected());
+        mUsuario.setTipoUsuario(TipoUsuario.ADMINISTRADOR);
+        mUsuario.setLogin(txtLogin.getText());
+        mUsuario.setSenha(String.valueOf(txtSenha.getPassword()));
+        mUsuario.setAtivo(checkUsuarioAtivo.isSelected());
         
         try {
-            if(Validator.validateForNulls(u)) {
-                this.mUserController.cadastrar(u);
-                JOptionPane.showMessageDialog(rootPane, "Usuario criado com sucesso!");
+            if(Validator.validateForNulls(mUsuario)) {
+                this.mUserController.insertAndUpdate(mUsuario);
+                JOptionPane.showMessageDialog(rootPane, "Usuário e senha criado com sucesso!");
                 this.dispose();
             }
         } catch (RequiredFieldException ex) {
@@ -346,6 +387,31 @@ public class NovoColaboradorJFrame extends javax.swing.JDialog {
     private javax.swing.JTextField txtLogin;
     private javax.swing.JTextField txtNome;
     private javax.swing.JPasswordField txtSenha;
+
+    @Override
+    public void onCreate(WindowEvent evt) {
+
+    }
+
+    @Override
+    public void onResume(WindowEvent evt) {
+
+    }
+
+    @Override
+    public void onClose(WindowEvent evt) {
+
+    }
+
+    @Override
+    public void onCreateControllers() {
+
+    }
+
+    @Override
+    public void onCreateViews() {
+
+    }
     // End of variables declaration//GEN-END:variables
 
 }

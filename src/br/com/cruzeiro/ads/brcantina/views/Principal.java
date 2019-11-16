@@ -6,6 +6,7 @@
 package br.com.cruzeiro.ads.brcantina.views;
 
 import br.com.cruzeiro.ads.brcantina.controllers.UserController;
+import br.com.cruzeiro.ads.brcantina.core.JFrameActivity;
 import br.com.cruzeiro.ads.brcantina.dao.UsuarioDAO;
 import br.com.cruzeiro.ads.brcantina.dao.interfaces.IUsuarioDAO;
 import br.com.cruzeiro.ads.brcantina.database.DataBase;
@@ -27,7 +28,7 @@ import java.util.logging.Level;
 import javax.swing.JOptionPane;
 import org.apache.log4j.Logger;
 
-public class Principal extends javax.swing.JFrame {
+public class Principal extends JFrameActivity {
 
     static Logger log = Logger.getLogger(
                       Principal.class.getName());
@@ -53,26 +54,7 @@ public class Principal extends javax.swing.JFrame {
         log.info("Init View Principal");
         
         Thread.setDefaultUncaughtExceptionHandler(new ExceptionsHandler());
-        
         initComponents();
-        initObjetos();
-        initControllers();
-    }
-    
-    private void initObjetos() {
-        mColaboradoresIternFrame = new ColaboradoresIternFrame();
-        mClientesIternFrame = new ClientesIternFrame();
-        mProdutosInterFrame = new ProdutosInterFrame();
-        mHistoricoPedidosInterFrame = new HistoricoPedidosInterFrame();
-        mCaixaInterFrame = new CaixaInterFrame();
-        mCategoriaProdutoInterFrame = new CategoriaProdutoInterFrame();
-        mFornecedoresInterFrame = new FornecedoresInterFrame();
-        mContasPagarInterFrame = new ContasPagarInterFrame();
-        mContasReceberInterFrame = new ContasReceberInterFrame();
-    }
-    
-    private void initControllers() {
-        this.mUserController = new UserController();
     }
 
     /**
@@ -112,14 +94,6 @@ public class Principal extends javax.swing.JFrame {
         jMenu3.setText("jMenu3");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowActivated(java.awt.event.WindowEvent evt) {
-                formWindowActivated(evt);
-            }
-            public void windowOpened(java.awt.event.WindowEvent evt) {
-                formWindowOpened(evt);
-            }
-        });
 
         javax.swing.GroupLayout dkpContainerLayout = new javax.swing.GroupLayout(dkpContainer);
         dkpContainer.setLayout(dkpContainerLayout);
@@ -346,54 +320,6 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_menuItemConfigSistemaActionPerformed
 
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        
-        try {
-            DataBase db = new DataBase();
-            db.initialize();
-            
-            if(this.mUserController.primeiroAdm()){
-                JOptionPane.showMessageDialog(rootPane, "Você precisa cadastrar um usuário administrador para conseguir acessar o sistema");
-                NovoColaboradorJFrame colaboradorJFrame = new NovoColaboradorJFrame();
-                colaboradorJFrame.setVisible(true);
-                colaboradorJFrame.setLocationRelativeTo(this);
-                colaboradorJFrame.addWindowListener(new WindowListener() {
-                    @Override
-                    public void windowOpened(WindowEvent e) {}
-                    @Override
-                    public void windowClosing(WindowEvent e) {}
-                    
-                    @Override
-                    public void windowClosed(WindowEvent e) {
-                        log.info("Primeiro usuário administrador não cadastrado");
-                        System.exit(0);
-                    }
-                    
-                    @Override
-                    public void windowIconified(WindowEvent e) {}
-                    @Override
-                    public void windowDeiconified(WindowEvent e) {}
-                    @Override
-                    public void windowActivated(WindowEvent e) {}
-                    @Override
-                    public void windowDeactivated(WindowEvent e) {}
-                });
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_formWindowOpened
-
-    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-        // TODO add your handling code here:
-    }//GEN-LAST:event_formWindowActivated
-
     /**
      * @param args the command line arguments
      */
@@ -455,4 +381,72 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu menuProdutos;
     private javax.swing.JMenu menuSobre;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void onCreate(WindowEvent evt) {
+
+    }
+
+    @Override
+    public void onResume(WindowEvent evt) {
+        try {
+            DataBase db = new DataBase();
+            db.initialize();
+            if(this.mUserController.primeiroAdm()){
+                JOptionPane.showMessageDialog(rootPane, "Você precisa cadastrar um usuário administrador para conseguir acessar o sistema");
+                NovoColaboradorJFrame colaboradorJFrame = new NovoColaboradorJFrame();
+                colaboradorJFrame.setVisible(true);
+                colaboradorJFrame.setLocationRelativeTo(this);
+                colaboradorJFrame.addWindowListener(new WindowListener() {
+                    @Override
+                    public void windowOpened(WindowEvent e) {}
+                    @Override
+                    public void windowClosing(WindowEvent e) {}
+
+                    @Override
+                    public void windowClosed(WindowEvent e) {
+                        if(mUserController.primeiroAdm()) {
+                            log.info("Primeiro usuário administrador não cadastrado");
+                            System.exit(0);
+                        }
+                    }
+
+                    @Override
+                    public void windowIconified(WindowEvent e) {}
+                    @Override
+                    public void windowDeiconified(WindowEvent e) {}
+                    @Override
+                    public void windowActivated(WindowEvent e) {}
+                    @Override
+                    public void windowDeactivated(WindowEvent e) {}
+                });
+            }
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
+            java.util.logging.Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Override
+    public void onClose(WindowEvent evt) {
+
+    }
+
+    @Override
+    public void onCreateControllers() {
+        this.mUserController = new UserController();
+    }
+
+    @Override
+    public void onCreateViews() {
+        mColaboradoresIternFrame = new ColaboradoresIternFrame();
+        mClientesIternFrame = new ClientesIternFrame();
+        mProdutosInterFrame = new ProdutosInterFrame();
+        mHistoricoPedidosInterFrame = new HistoricoPedidosInterFrame();
+        mCaixaInterFrame = new CaixaInterFrame();
+        mCategoriaProdutoInterFrame = new CategoriaProdutoInterFrame();
+        mFornecedoresInterFrame = new FornecedoresInterFrame();
+        mContasPagarInterFrame = new ContasPagarInterFrame();
+        mContasReceberInterFrame = new ContasReceberInterFrame();
+    }
+
 }

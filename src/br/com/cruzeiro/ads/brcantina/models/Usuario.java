@@ -3,14 +3,11 @@ package br.com.cruzeiro.ads.brcantina.models;
 import br.com.cruzeiro.ads.brcantina.annotations.Email;
 import br.com.cruzeiro.ads.brcantina.annotations.Password;
 import br.com.cruzeiro.ads.brcantina.annotations.Required;
-import br.com.cruzeiro.ads.brcantina.exceptions.ValidateException;
-import br.com.cruzeiro.ads.brcantina.interfaces.Validator;
 import br.com.cruzeiro.ads.brcantina.models.enums.TipoUsuario;
 import br.com.cruzeiro.ads.brcantina.utils.PasswordUtils;
-import com.mysql.cj.util.StringUtils;
 import java.util.UUID;
 
-public class Usuario implements Validator{
+public class Usuario{
     
     private UUID idUsuario;
     @Required
@@ -66,7 +63,7 @@ public class Usuario implements Validator{
     }
 
     public String getFone() {
-        return fone;
+        return fone.replace("-", "").replace("(", "").replace(")", "");
     }
 
     public void setFone(String fone) {
@@ -113,18 +110,5 @@ public class Usuario implements Validator{
 
     public void setTipoUsuario(TipoUsuario tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
-    }
-
-    /**
-     *
-     * @throws ValidateException
-     */
-    @Override
-    public void validate() {
-        if (StringUtils.isNullOrEmpty(nome) || StringUtils.isNullOrEmpty(login) || StringUtils.isNullOrEmpty(fone)) {
-            
-                //throw new ValidateException("Os campos (*) são obrigatorios!");
-            
-        }
     }
 }
