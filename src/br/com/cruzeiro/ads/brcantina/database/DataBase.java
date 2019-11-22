@@ -19,6 +19,8 @@ public class DataBase {
     private List<String> initializeTables() {
         List<String> tableSQL = new ArrayList<>();
 
+        //tableSQL.add("\"drop all objects delete files\"");
+
         tableSQL.add(
                 "CREATE TABLE IF NOT EXISTS `categoria` (\n" +
                 "  `id_categoria` int(11) NOT NULL,\n" +

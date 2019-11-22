@@ -5,18 +5,39 @@
  */
 package br.com.cruzeiro.ads.brcantina.views;
 
+import br.com.cruzeiro.ads.brcantina.controllers.CategoriaController;
+import br.com.cruzeiro.ads.brcantina.controllers.interfaces.ICategoriaController;
+import br.com.cruzeiro.ads.brcantina.exceptions.RequiredFieldException;
+import br.com.cruzeiro.ads.brcantina.models.Categoria;
+import br.com.cruzeiro.ads.brcantina.validations.Validator;
+
+import javax.swing.*;
+
 /**
  *
  * @author jose.antonio
  */
 public class NovaCategoriaJFrame extends javax.swing.JDialog {
 
+    private Categoria mCategoria;
+    
+    private ICategoriaController mCategoriaController;
     /**
      * Creates new form NovaCategoriaJFrame
      */
     public NovaCategoriaJFrame() {
+        init();
+    }
+    
+    public NovaCategoriaJFrame(Categoria c) {
+        init();
+        this.mCategoria = c;
+    }
+    
+    private void init() {
         this.setModal(true);
         initComponents();
+        this.mCategoriaController = new CategoriaController();
     }
 
     /**
@@ -40,6 +61,11 @@ public class NovaCategoriaJFrame extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Categoria");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         paneInformacoes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
 
@@ -48,10 +74,13 @@ public class NovaCategoriaJFrame extends javax.swing.JDialog {
         lblCategoriaDe.setText("Categoria de:");
 
         buttonGroupCategoriaDe.add(rdProdutos);
+        rdProdutos.setSelected(true);
         rdProdutos.setText("Produtos");
+        rdProdutos.setEnabled(false);
 
         buttonGroupCategoriaDe.add(txtInsumos);
         txtInsumos.setText("Insumos");
+        txtInsumos.setEnabled(false);
 
         javax.swing.GroupLayout paneInformacoesLayout = new javax.swing.GroupLayout(paneInformacoes);
         paneInformacoes.setLayout(paneInformacoesLayout);
@@ -89,6 +118,11 @@ public class NovaCategoriaJFrame extends javax.swing.JDialog {
         );
 
         btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
 
         btnVoltar.setText("Voltar");
         btnVoltar.addActionListener(new java.awt.event.ActionListener() {
@@ -131,6 +165,31 @@ public class NovaCategoriaJFrame extends javax.swing.JDialog {
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnVoltarActionPerformed
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        Categoria categoria = new Categoria(txtDescricao.getText());
+        if (mCategoria != null) categoria.setId(mCategoria.getId());
+        try {
+            if (Validator.validateForNulls(categoria)) {
+                this.mCategoriaController.insertAndUpdate(categoria);
+                JOptionPane.showMessageDialog(null, "Item adicionado com sucesso!");
+                this.dispose();
+            }
+        } catch (RequiredFieldException e) {
+            e.notifyUserWithToast();
+        } catch (IllegalAccessException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        if(this.mCategoria != null) {
+            this.mCategoria = this.mCategoriaController.getByDescription(mCategoria.getDescricao());
+            if (mCategoria != null) {
+                txtDescricao.setText(mCategoria.getDescricao());
+            }
+        }
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments

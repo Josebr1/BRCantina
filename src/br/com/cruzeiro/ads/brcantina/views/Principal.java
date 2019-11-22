@@ -407,7 +407,7 @@ public class Principal extends JFrameActivity {
                     public void windowClosed(WindowEvent e) {
                         if(mUserController.primeiroAdm()) {
                             log.info("Primeiro usuário administrador não cadastrado");
-                            System.exit(0);
+                            //System.exit(0);
                         }
                     }
 

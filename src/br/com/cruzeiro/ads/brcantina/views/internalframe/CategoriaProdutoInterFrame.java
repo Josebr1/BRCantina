@@ -5,7 +5,16 @@
  */
 package br.com.cruzeiro.ads.brcantina.views.internalframe;
 
+import br.com.cruzeiro.ads.brcantina.controllers.CategoriaController;
+import br.com.cruzeiro.ads.brcantina.controllers.interfaces.ICategoriaController;
+import br.com.cruzeiro.ads.brcantina.models.Categoria;
 import br.com.cruzeiro.ads.brcantina.views.NovaCategoriaJFrame;
+import org.h2.util.StringUtils;
+
+import javax.swing.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.List;
 
 /**
  *
@@ -13,11 +22,15 @@ import br.com.cruzeiro.ads.brcantina.views.NovaCategoriaJFrame;
  */
 public class CategoriaProdutoInterFrame extends javax.swing.JInternalFrame {
 
+    private ICategoriaController mCategoriaController;
+
     /**
      * Creates new form CategoriaProdutoInterFrame
      */
     public CategoriaProdutoInterFrame() {
         initComponents();
+
+        this.mCategoriaController = new CategoriaController();
     }
 
     /**
@@ -35,10 +48,28 @@ public class CategoriaProdutoInterFrame extends javax.swing.JInternalFrame {
         scrollPaneCategoria = new javax.swing.JScrollPane();
         listCategoria = new javax.swing.JList<>();
         lblTitulos = new javax.swing.JLabel();
+        btnExcluir = new javax.swing.JButton();
 
         setClosable(true);
         setTitle("Categoria de Produtos");
         setToolTipText("Categoria de Produtos");
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameOpened(evt);
+            }
+        });
 
         paneHeader.setBackground(new java.awt.Color(153, 153, 153));
 
@@ -50,6 +81,12 @@ public class CategoriaProdutoInterFrame extends javax.swing.JInternalFrame {
         });
 
         btnEditar.setText("Editar");
+        btnEditar.setEnabled(false);
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout paneHeaderLayout = new javax.swing.GroupLayout(paneHeader);
         paneHeader.setLayout(paneHeaderLayout);
@@ -77,9 +114,22 @@ public class CategoriaProdutoInterFrame extends javax.swing.JInternalFrame {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        listCategoria.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                listCategoriaValueChanged(evt);
+            }
+        });
         scrollPaneCategoria.setViewportView(listCategoria);
 
         lblTitulos.setText("Cadastramento de categorias:");
+
+        btnExcluir.setText("Excluir");
+        btnExcluir.setEnabled(false);
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -92,7 +142,10 @@ public class CategoriaProdutoInterFrame extends javax.swing.JInternalFrame {
                     .addComponent(scrollPaneCategoria)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblTitulos)
-                        .addGap(0, 386, Short.MAX_VALUE)))
+                        .addGap(0, 198, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnExcluir)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -102,8 +155,10 @@ public class CategoriaProdutoInterFrame extends javax.swing.JInternalFrame {
                 .addGap(19, 19, 19)
                 .addComponent(lblTitulos)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrollPaneCategoria, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(scrollPaneCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnExcluir)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -113,11 +168,71 @@ public class CategoriaProdutoInterFrame extends javax.swing.JInternalFrame {
         NovaCategoriaJFrame categoriaJFrame = new NovaCategoriaJFrame();
         categoriaJFrame.setVisible(true);
         categoriaJFrame.setLocationRelativeTo(this);
+        categoriaJFrame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                super.windowClosed(e);
+                updateList();
+            }
+        });
     }//GEN-LAST:event_btnNovoActionPerformed
 
+    private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
+        this.updateList();
+    }//GEN-LAST:event_formInternalFrameOpened
+
+    private void listCategoriaValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listCategoriaValueChanged
+        this.enabledActions();
+    }//GEN-LAST:event_listCategoriaValueChanged
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        String selected = listCategoria.getSelectedValue();
+        if(!StringUtils.isNullOrEmpty(selected)) {
+            NovaCategoriaJFrame frame = new NovaCategoriaJFrame(new Categoria(selected));
+            frame.setVisible(true);
+            frame.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosed(WindowEvent e) {
+                    updateList();
+                    super.windowClosed(e);
+                }
+            });
+        }
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        int confirm = JOptionPane.showConfirmDialog(null, "Deseja excluir esse item?", "Atenção", JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_NO_OPTION) {
+            this.mCategoriaController.delete(listCategoria.getSelectedValue());
+            JOptionPane.showMessageDialog(null, "Item excluido com sucesso!");
+        }
+        updateList();
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void updateList() {
+        List<Categoria> all = mCategoriaController.all();
+        DefaultListModel model = new DefaultListModel();
+
+        for (Categoria o: all) {
+            model.addElement(o.getDescricao());
+        }
+        listCategoria.setModel(model);
+        disabledActions();
+    }
+
+    private void disabledActions() {
+        btnExcluir.setEnabled(false);
+        btnEditar.setEnabled(false);
+    }
+
+    private void enabledActions() {
+        btnExcluir.setEnabled(true);
+        btnEditar.setEnabled(true);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnNovo;
     private javax.swing.JLabel lblTitulos;
     private javax.swing.JList<String> listCategoria;
