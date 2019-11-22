@@ -4,20 +4,22 @@ import br.com.cruzeiro.ads.brcantina.controllers.interfaces.IUserController;
 import br.com.cruzeiro.ads.brcantina.dao.UsuarioDAO;
 import br.com.cruzeiro.ads.brcantina.dao.interfaces.IUsuarioDAO;
 import br.com.cruzeiro.ads.brcantina.models.Usuario;
+
+import javax.swing.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class UserController implements IUserController{
+public class UserController implements IUserController {
 
     private IUsuarioDAO mUsuarioDAO;
-    
-    public UserController(){
+
+    public UserController() {
         this.mUsuarioDAO = new UsuarioDAO();
     }
-    
+
     @Override
     public boolean primeiroAdm() {
         try {
@@ -31,12 +33,11 @@ public class UserController implements IUserController{
     @Override
     public void insertAndUpdate(Usuario usuario) {
         try {
-            if (usuario.getIdUsuario() != null) {
-                this.mUsuarioDAO.update(usuario);
-            }
-            this.mUsuarioDAO.insert(usuario);
+            if (usuario.getIdUsuario() != null) this.mUsuarioDAO.update(usuario);
+            else this.mUsuarioDAO.insert(usuario);
         } catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException ex) {
             Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }
 
@@ -49,7 +50,7 @@ public class UserController implements IUserController{
         }
         return new ArrayList<>();
     }
-    
+
     @Override
     public Usuario getUserByEmail(String email) {
         try {

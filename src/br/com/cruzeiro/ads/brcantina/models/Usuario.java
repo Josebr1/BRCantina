@@ -111,4 +111,19 @@ public class Usuario{
     public void setTipoUsuario(TipoUsuario tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
     }
+
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "idUsuario=" + idUsuario +
+                ", nome='" + nome + '\'' +
+                ", email='" + email + '\'' +
+                ", fone='" + fone + '\'' +
+                ", temAcessoAoSistema=" + temAcessoAoSistema +
+                ", login='" + login + '\'' +
+                ", senha='" + senha + '\'' +
+                ", ativo=" + ativo +
+                ", tipoUsuario=" + tipoUsuario +
+                '}';
+    }
 }

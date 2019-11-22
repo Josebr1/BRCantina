@@ -12,6 +12,7 @@ import br.com.cruzeiro.ads.brcantina.core.Dialog;
 import br.com.cruzeiro.ads.brcantina.exceptions.RequiredFieldException;
 import br.com.cruzeiro.ads.brcantina.models.Usuario;
 import br.com.cruzeiro.ads.brcantina.models.enums.TipoUsuario;
+import br.com.cruzeiro.ads.brcantina.utils.GroupButtonUtils;
 import br.com.cruzeiro.ads.brcantina.validations.Validator;
 import com.mysql.cj.util.StringUtils;
 
@@ -19,7 +20,7 @@ import java.awt.event.WindowEvent;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
+import javax.swing.*;
 
 /**
  *
@@ -72,7 +73,9 @@ public class NovoColaboradorJFrame extends Dialog {
             txtFonePrincipal.setText(mUsuario.getFone());
             checkPermitirAcesso.setSelected(mUsuario.isTemAcessoAoSistema());
             checkUsuarioAtivo.setSelected(mUsuario.isAtivo());
-            
+            TipoUsuario typeUser = mUsuario.getTipoUsuario();
+            if (typeUser.getValue() == TipoUsuario.ADMINISTRADOR.getValue()) rdAdministrador.setSelected(true);
+            else rdAtendente.setSelected(true);
             txtLogin.disable();
             txtSenha.disable();
         }
@@ -304,14 +307,15 @@ public class NovoColaboradorJFrame extends Dialog {
     }//GEN-LAST:event_btnVoltarActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        if(mUUID != null) mUsuario.setIdUsuario(UUID.fromString(mUUID));
+        if(!StringUtils.isNullOrEmpty(mUUID)) mUsuario.setIdUsuario(UUID.fromString(mUUID));
         mUsuario.setNome(txtNome.getText());
         mUsuario.setEmail(txtEmail.getText());
         mUsuario.setFone(txtFonePrincipal.getText());
         mUsuario.setTemAcessoAoSistema(checkPermitirAcesso.isSelected());
-        mUsuario.setTipoUsuario(TipoUsuario.ADMINISTRADOR);
-        mUsuario.setLogin(txtLogin.getText());
-        mUsuario.setSenha(String.valueOf(txtSenha.getPassword()));
+        if(rdAdministrador.isSelected()) mUsuario.setTipoUsuario(TipoUsuario.ADMINISTRADOR);
+        if(rdAtendente.isSelected()) mUsuario.setTipoUsuario(TipoUsuario.ATENDENTE);
+        if(!StringUtils.isNullOrEmpty(txtLogin.getText())) mUsuario.setLogin(txtLogin.getText());
+        if(!StringUtils.isNullOrEmpty(txtSenha.getText())) mUsuario.setSenha(String.valueOf(txtSenha.getPassword()));
         mUsuario.setAtivo(checkUsuarioAtivo.isSelected());
         
         try {

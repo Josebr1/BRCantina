@@ -4,6 +4,8 @@ import br.com.cruzeiro.ads.brcantina.dao.interfaces.IUsuarioDAO;
 import br.com.cruzeiro.ads.brcantina.models.Usuario;
 import br.com.cruzeiro.ads.brcantina.models.enums.TipoUsuario;
 import br.com.cruzeiro.ads.brcantina.utils.DBUtils;
+import org.apache.log4j.Logger;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,6 +17,7 @@ import java.util.UUID;
 public class UsuarioDAO implements IUsuarioDAO{
 
     private Connection mConnection = null;
+    private final static Logger LOGGER = Logger.getLogger(UsuarioDAO.class);
     
     @Override
     public boolean isFirstUserCreate() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException{
@@ -28,6 +31,7 @@ public class UsuarioDAO implements IUsuarioDAO{
             statement.setInt(1, TipoUsuario.ADMINISTRADOR.getValue());
             
             resultSet = statement.executeQuery();
+            LOGGER.info(resultSet);
             return !resultSet.next();
         } finally {
             if (mConnection != null)
@@ -50,7 +54,7 @@ public class UsuarioDAO implements IUsuarioDAO{
 
             while (rs.next()) {
                    usuario = new Usuario();
-                   usuario.setIdUsuario((UUID)rs.getObject("id_usuario"));
+                   usuario.setIdUsuario(UUID.fromString(rs.getString("id_usuario")));
                    usuario.setNome(rs.getString("nome"));
                    usuario.setEmail(rs.getString("email"));
                    usuario.setFone(rs.getString("fone"));
@@ -59,7 +63,9 @@ public class UsuarioDAO implements IUsuarioDAO{
                    usuario.setSenha(rs.getString("senha"));
                    usuario.setAtivo(rs.getBoolean("ativo"));
                    usuario.setTipoUsuario(TipoUsuario.get(rs.getInt("fk_tipo_usuario")));
-                   
+
+                LOGGER.info(statement);
+                LOGGER.info(rs);
               return usuario;
             }
             return null;
@@ -88,6 +94,7 @@ public class UsuarioDAO implements IUsuarioDAO{
             statement.setInt(9, usuario.getTipoUsuario().getValue());
             
             statement.execute();
+            LOGGER.info(statement);
         } finally {
             if (mConnection != null)
                 mConnection.close();
@@ -108,9 +115,10 @@ public class UsuarioDAO implements IUsuarioDAO{
             statement.setBoolean(3, usuario.isTemAcessoAoSistema());
             statement.setBoolean(4, usuario.isAtivo());
             statement.setInt(5, usuario.getTipoUsuario().getValue());
-            statement.setObject(6, UUID.randomUUID());
+            statement.setObject(6, usuario.getIdUsuario());
             
-            statement.execute();
+            statement.executeUpdate();
+            LOGGER.info(statement);
         } finally {
             if (mConnection != null)
                 mConnection.close();
@@ -130,12 +138,14 @@ public class UsuarioDAO implements IUsuarioDAO{
             resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                   usuarios.add(new Usuario(
+                Usuario usuario = new Usuario(
                            resultSet.getString("nome"),
                            resultSet.getString("email"),
                            resultSet.getString("login"),
                            resultSet.getBoolean("ativo"),
-                           TipoUsuario.ADMINISTRADOR));
+                           TipoUsuario.get(resultSet.getInt("fk_tipo_usuario")));
+                usuarios.add(usuario);
+                LOGGER.info(usuario.toString());
             }
             return usuarios;
         } finally {
