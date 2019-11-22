@@ -1,0 +1,14 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/openjdk:11.0.3-jdk-stretch
+    steps:
+      - checkout
+      - run:
+          name: building....
+          run: ant -buildfile build.xml run
+      - persist_to_workspace:
+          root: .
+          paths:
+            - build

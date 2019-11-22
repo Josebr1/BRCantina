@@ -12,8 +12,9 @@ import br.com.cruzeiro.ads.brcantina.models.enums.TipoUsuario;
 import br.com.cruzeiro.ads.brcantina.views.NovoColaboradorJFrame;
 
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.List;
-import javax.swing.JOptionPane;
 import org.h2.util.StringUtils;
 
 /**
@@ -75,19 +76,11 @@ public class ColaboradoresIternFrame extends javax.swing.JInternalFrame {
         paneAcoes.setBackground(new java.awt.Color(204, 204, 204));
 
         btnNovo.setText("Novo");
-        btnNovo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNovoActionPerformed(evt);
-            }
-        });
+        btnNovo.addActionListener(this::btnNovoActionPerformed);
 
         btnEditar.setText("Editar");
         btnEditar.setEnabled(false);
-        btnEditar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarActionPerformed(evt);
-            }
-        });
+        btnEditar.addActionListener(this::btnEditarActionPerformed);
 
         javax.swing.GroupLayout paneAcoesLayout = new javax.swing.GroupLayout(paneAcoes);
         paneAcoes.setLayout(paneAcoesLayout);
@@ -154,10 +147,16 @@ public class ColaboradoresIternFrame extends javax.swing.JInternalFrame {
         NovoColaboradorJFrame colaboradorJFrame = new NovoColaboradorJFrame();
         colaboradorJFrame.setVisible(true);
         colaboradorJFrame.setLocationRelativeTo(this);
+        colaboradorJFrame.addWindowListener(new CallbackUpdateTable());
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
 
+        this.populatorTable();
+
+    }//GEN-LAST:event_formInternalFrameOpened
+
+    private void populatorTable() {
         List<Usuario> all = this.mUserController.all();
 
         DefaultTableModel model = new DefaultTableModel(new String [] {
@@ -166,11 +165,11 @@ public class ColaboradoresIternFrame extends javax.swing.JInternalFrame {
 
 
         for (Usuario u : all) {
-            model.addRow(new Object[]{u.getNome(), u.getEmail(), u.getLogin(), u.isAtivo(), TipoUsuario.get(u.getTipoUsuario())});
+            model.addRow(new Object[]{u.getNome(), u.getEmail(), u.getLogin(), u.isAtivo() ? "Sim" : "Não", TipoUsuario.get(u.getTipoUsuario())});
         }
 
         tableColaboradores.setModel(model);
-    }//GEN-LAST:event_formInternalFrameOpened
+    }
 
     private void tableColaboradoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableColaboradoresMouseClicked
         
@@ -188,9 +187,49 @@ public class ColaboradoresIternFrame extends javax.swing.JInternalFrame {
             NovoColaboradorJFrame colaboradorJFrame = new NovoColaboradorJFrame(this.UUID);
             colaboradorJFrame.setVisible(true);
             colaboradorJFrame.setLocationRelativeTo(this);
+
+            colaboradorJFrame.addWindowListener(new CallbackUpdateTable());
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 
+
+    private class CallbackUpdateTable implements WindowListener {
+        @Override
+        public void windowOpened(WindowEvent windowEvent) {
+
+        }
+
+        @Override
+        public void windowClosing(WindowEvent windowEvent) {
+
+        }
+
+        @Override
+        public void windowClosed(WindowEvent windowEvent) {
+            populatorTable();
+            btnEditar.setEnabled(false);
+        }
+
+        @Override
+        public void windowIconified(WindowEvent windowEvent) {
+
+        }
+
+        @Override
+        public void windowDeiconified(WindowEvent windowEvent) {
+
+        }
+
+        @Override
+        public void windowActivated(WindowEvent windowEvent) {
+
+        }
+
+        @Override
+        public void windowDeactivated(WindowEvent windowEvent) {
+
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEditar;
