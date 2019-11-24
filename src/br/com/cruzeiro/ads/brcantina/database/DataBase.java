@@ -20,11 +20,11 @@ public class DataBase {
     private List<String> initializeTables() {
         List<String> tableSQL = new ArrayList<>();
 
-        //tableSQL.add("\"drop all objects delete files\"");
+        //tableSQL.add("drop all objects delete files");
 
         tableSQL.add(
                 "CREATE TABLE IF NOT EXISTS `categoria` (\n" +
-                        "  `id_categoria` int(11) NOT NULL,\n" +
+                        "  `id_categoria` int(11) NOT NULL AUTO_INCREMENT,\n" +
                         "  `descricao` varchar(45) NOT NULL UNIQUE,\n" +
                         "  PRIMARY KEY (`id_categoria`)\n" +
                         ") ENGINE=InnoDB DEFAULT CHARSET=utf8;");
@@ -53,7 +53,7 @@ public class DataBase {
                         "  `referencia` varchar(255) DEFAULT NULL,\n" +
                         "  `numero` varchar(255) NOT NULL,\n" +
                         "  `complemento` varchar(255) DEFAULT NULL,\n" +
-                        "  `uf` varchar(2) NOT NULL,\n" +
+                        "  `uf` enum('AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO') NOT NULL,\n" +
                         "  PRIMARY KEY (`id_endereco`)\n" +
                         ") ENGINE=InnoDB DEFAULT CHARSET=utf8;");
 
@@ -241,10 +241,10 @@ public class DataBase {
                 ps.execute();
             }
 
-            //for (String sqlQuery : populator()) {
-            //    PreparedStatement ps = DBUtils.getPreparedStatement(mConnection, sqlQuery);
-            //    ps.execute();
-            //}
+            for (String sqlQuery : populator()) {
+                PreparedStatement ps = DBUtils.getPreparedStatement(mConnection, sqlQuery);
+                ps.execute();
+            }
 
         } finally {
             if (mConnection != null)
