@@ -25,7 +25,7 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace pref="461" max="32767" attributes="0"/>
+              <EmptySpace pref="529" max="32767" attributes="0"/>
               <Component id="btnVoltar" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="btnSalvar" min="-2" max="-2" attributes="0"/>
@@ -93,7 +93,7 @@
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="txtFone" alignment="0" min="-2" pref="193" max="-2" attributes="0"/>
+                                      <Component id="txtIERG" alignment="0" min="-2" pref="193" max="-2" attributes="0"/>
                                       <Component id="txtNome" alignment="0" min="-2" pref="193" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="32767" attributes="0"/>
@@ -171,7 +171,7 @@
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="txtFone" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtIERG" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txtCelular" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="lblCelular" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="lblFone" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -226,23 +226,26 @@
         <Component class="javax.swing.JTextField" name="txtNome">
         </Component>
         <Component class="javax.swing.JTextField" name="txtDocumento">
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="try{&#xa;   javax.swing.text.MaskFormatter data= new javax.swing.text.MaskFormatter(&quot;##.###.###/####-##&quot;);&#xa;   txtDocumento = new javax.swing.JFormattedTextField(data);&#xa;}catch (Exception e){&#xa;&#xa;} "/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="lblDocumento">
           <Properties>
-            <Property name="text" type="java.lang.String" value="CPF ou CNPJ:"/>
+            <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;body&gt;&lt;span&gt;CNPJ:&lt;span style=&apos;color:red;&apos;&gt;*&lt;/span&gt;&lt;/span&gt;&lt;/body&gt;&lt;/html&gt;"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblNome">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Nome:"/>
+            <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;body&gt;&lt;span&gt;Nome:&lt;span style=&apos;color:red;&apos;&gt;*&lt;/span&gt;&lt;/span&gt;&lt;/body&gt;&lt;/html&gt;"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblFone">
           <Properties>
-            <Property name="text" type="java.lang.String" value="IE ou RG:"/>
+            <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;body&gt;&lt;span&gt;IE ou RG:&lt;span style=&apos;color:red;&apos;&gt;*&lt;/span&gt;&lt;/span&gt;&lt;/body&gt;&lt;/html&gt;"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtFone">
+        <Component class="javax.swing.JTextField" name="txtIERG">
         </Component>
         <Component class="javax.swing.JLabel" name="lblCelular">
           <Properties>
@@ -250,6 +253,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtCelular">
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="try{&#xa;   javax.swing.text.MaskFormatter data= new javax.swing.text.MaskFormatter(&quot;(##)#####-####&quot;);&#xa;   txtCelular = new javax.swing.JFormattedTextField(data);&#xa;}catch (Exception e){&#xa;&#xa;} "/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="lblEnderecoPrincipal">
           <Properties>
@@ -260,17 +266,20 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtCep">
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="try{&#xa;   javax.swing.text.MaskFormatter data= new javax.swing.text.MaskFormatter(&quot;#####-###&quot;);&#xa;   txtCep = new javax.swing.JFormattedTextField(data);&#xa;}catch (Exception e){&#xa;&#xa;} "/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="lblCep">
           <Properties>
-            <Property name="text" type="java.lang.String" value="CEP:"/>
+            <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;body&gt;&lt;span&gt;CEP:&lt;span style=&apos;color:red;&apos;&gt;*&lt;/span&gt;&lt;/span&gt;&lt;/body&gt;&lt;/html&gt;"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtEndereco">
         </Component>
         <Component class="javax.swing.JLabel" name="lblNumero">
           <Properties>
-            <Property name="text" type="java.lang.String" value="N&#xfa;mero:"/>
+            <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;body&gt;&lt;span&gt;N&#xfa;mero:&lt;span style=&apos;color:red;&apos;&gt;*&lt;/span&gt;&lt;/span&gt;&lt;/body&gt;&lt;/html&gt;"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtNumero">
@@ -289,11 +298,34 @@
         <Component class="javax.swing.JComboBox" name="comboUF">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="4">
-                <StringItem index="0" value="Item 1"/>
-                <StringItem index="1" value="Item 2"/>
-                <StringItem index="2" value="Item 3"/>
-                <StringItem index="3" value="Item 4"/>
+              <StringArray count="27">
+                <StringItem index="0" value="AC"/>
+                <StringItem index="1" value="AL"/>
+                <StringItem index="2" value="AP"/>
+                <StringItem index="3" value="AM"/>
+                <StringItem index="4" value="BA"/>
+                <StringItem index="5" value="CE"/>
+                <StringItem index="6" value="DF"/>
+                <StringItem index="7" value="ES"/>
+                <StringItem index="8" value="GO"/>
+                <StringItem index="9" value="MA"/>
+                <StringItem index="10" value="MT"/>
+                <StringItem index="11" value="MS"/>
+                <StringItem index="12" value="MG"/>
+                <StringItem index="13" value="PA"/>
+                <StringItem index="14" value="PB"/>
+                <StringItem index="15" value="PR"/>
+                <StringItem index="16" value="PE"/>
+                <StringItem index="17" value="PI"/>
+                <StringItem index="18" value="RJ"/>
+                <StringItem index="19" value="RN"/>
+                <StringItem index="20" value="RS"/>
+                <StringItem index="21" value="RO"/>
+                <StringItem index="22" value="RR"/>
+                <StringItem index="23" value="SC"/>
+                <StringItem index="24" value="SP"/>
+                <StringItem index="25" value="SE"/>
+                <StringItem index="26" value="TO"/>
               </StringArray>
             </Property>
           </Properties>
@@ -303,24 +335,24 @@
         </Component>
         <Component class="javax.swing.JLabel" name="lblUf">
           <Properties>
-            <Property name="text" type="java.lang.String" value="UF:"/>
+            <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;body&gt;&lt;span&gt;UF:&lt;span style=&apos;color:red;&apos;&gt;*&lt;/span&gt;&lt;/span&gt;&lt;/body&gt;&lt;/html&gt;"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtReferencia">
         </Component>
         <Component class="javax.swing.JLabel" name="lblEndereco">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Endere&#xe7;o:"/>
+            <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;body&gt;&lt;span&gt;Endere&#xe7;o:&lt;span style=&apos;color:red;&apos;&gt;*&lt;/span&gt;&lt;/span&gt;&lt;/body&gt;&lt;/html&gt;"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblBairro">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Bairro:"/>
+            <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;body&gt;&lt;span&gt;Bairro:&lt;span style=&apos;color:red;&apos;&gt;*&lt;/span&gt;&lt;/span&gt;&lt;/body&gt;&lt;/html&gt;"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblCidade">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Cidade:"/>
+            <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;body&gt;&lt;span&gt;Cidade:&lt;span style=&apos;color:red;&apos;&gt;*&lt;/span&gt;&lt;/span&gt;&lt;/body&gt;&lt;/html&gt;"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblReferencia">
@@ -334,6 +366,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Salvar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSalvarActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnVoltar">
       <Properties>

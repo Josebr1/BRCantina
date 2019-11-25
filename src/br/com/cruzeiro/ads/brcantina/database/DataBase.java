@@ -45,7 +45,7 @@ public class DataBase {
 
         tableSQL.add(
                 "CREATE TABLE IF NOT EXISTS `endereco` (\n" +
-                        "  `id_endereco` int(11) NOT NULL,\n" +
+                        "  `id_endereco` int(11) NOT NULL AUTO_INCREMENT,\n" +
                         "  `cep` varchar(8) NOT NULL,\n" +
                         "  `endereco` varchar(255) NOT NULL,\n" +
                         "  `bairro` varchar(150) NOT NULL,\n" +
@@ -106,7 +106,7 @@ public class DataBase {
 
         tableSQL.add(
                 "CREATE TABLE IF NOT EXISTS `fornecedor` (\n" +
-                        "  `id_fornecedor` int(11) NOT NULL,\n" +
+                        "  `id_fornecedor` int(11) NOT NULL AUTO_INCREMENT,\n" +
                         "  `nome` varchar(45) DEFAULT NULL,\n" +
                         "  `fone` varchar(45) DEFAULT NULL,\n" +
                         "  `email` varchar(45) DEFAULT NULL,\n" +

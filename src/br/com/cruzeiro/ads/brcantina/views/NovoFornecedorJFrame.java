@@ -5,20 +5,59 @@
  */
 package br.com.cruzeiro.ads.brcantina.views;
 
+import br.com.cruzeiro.ads.brcantina.controllers.EnderecoController;
+import br.com.cruzeiro.ads.brcantina.controllers.FornecedorController;
+import br.com.cruzeiro.ads.brcantina.controllers.interfaces.IEnderecoController;
+import br.com.cruzeiro.ads.brcantina.controllers.interfaces.IFornecedorController;
+import br.com.cruzeiro.ads.brcantina.exceptions.RequiredFieldException;
+import br.com.cruzeiro.ads.brcantina.models.Endereco;
+import br.com.cruzeiro.ads.brcantina.models.Fornecedor;
+import br.com.cruzeiro.ads.brcantina.validations.Validator;
+import org.h2.util.StringUtils;
+
+import javax.swing.*;
+import java.util.Objects;
+
 /**
  *
  * @author jose.antonio
  */
 public class NovoFornecedorJFrame extends javax.swing.JDialog {
 
+    private IFornecedorController mFornecedorController;
+    private IEnderecoController mEnderecoController;
+    private Fornecedor mFornecedor;
+    private Endereco mEndereco;
+
     /**
      * Creates new form NovoFornecedorJFrame
      */
     public NovoFornecedorJFrame() {
-        this.setModal(true);
-        initComponents();
+        init();
     }
 
+    public NovoFornecedorJFrame(int id) {
+        init();
+        mFornecedor.setId(id);
+        createOrUpdate();
+    }
+
+    private void init() {
+        this.setModal(true);
+        initComponents();
+        this.initControllers();
+        this.initModels();
+    }
+
+    private void initControllers() {
+        this.mFornecedorController = new FornecedorController();
+        this.mEnderecoController = new EnderecoController();
+    }
+
+    private void initModels() {
+        mFornecedor = new Fornecedor();
+        mEndereco = new Endereco();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -32,14 +71,32 @@ public class NovoFornecedorJFrame extends javax.swing.JDialog {
         lblDadosPrincipais = new javax.swing.JLabel();
         txtNome = new javax.swing.JTextField();
         txtDocumento = new javax.swing.JTextField();
+        try{
+            javax.swing.text.MaskFormatter data= new javax.swing.text.MaskFormatter("##.###.###/####-##");
+            txtDocumento = new javax.swing.JFormattedTextField(data);
+        }catch (Exception e){
+
+        }
         lblDocumento = new javax.swing.JLabel();
         lblNome = new javax.swing.JLabel();
         lblFone = new javax.swing.JLabel();
-        txtFone = new javax.swing.JTextField();
+        txtIERG = new javax.swing.JTextField();
         lblCelular = new javax.swing.JLabel();
         txtCelular = new javax.swing.JTextField();
+        try{
+            javax.swing.text.MaskFormatter data= new javax.swing.text.MaskFormatter("(##)#####-####");
+            txtCelular = new javax.swing.JFormattedTextField(data);
+        }catch (Exception e){
+
+        }
         lblEnderecoPrincipal = new javax.swing.JLabel();
         txtCep = new javax.swing.JTextField();
+        try{
+            javax.swing.text.MaskFormatter data= new javax.swing.text.MaskFormatter("#####-###");
+            txtCep = new javax.swing.JFormattedTextField(data);
+        }catch (Exception e){
+
+        }
         lblCep = new javax.swing.JLabel();
         txtEndereco = new javax.swing.JTextField();
         lblNumero = new javax.swing.JLabel();
@@ -66,32 +123,32 @@ public class NovoFornecedorJFrame extends javax.swing.JDialog {
         lblDadosPrincipais.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblDadosPrincipais.setText("Dados Principais:");
 
-        lblDocumento.setText("CPF ou CNPJ:");
+        lblDocumento.setText("<html><body><span>CNPJ:<span style='color:red;'>*</span></span></body></html>");
 
-        lblNome.setText("Nome:");
+        lblNome.setText("<html><body><span>Nome:<span style='color:red;'>*</span></span></body></html>");
 
-        lblFone.setText("IE ou RG:");
+        lblFone.setText("<html><body><span>IE ou RG:<span style='color:red;'>*</span></span></body></html>");
 
         lblCelular.setText("Celular:");
 
         lblEnderecoPrincipal.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblEnderecoPrincipal.setText("Endereço Principal:");
 
-        lblCep.setText("CEP:");
+        lblCep.setText("<html><body><span>CEP:<span style='color:red;'>*</span></span></body></html>");
 
-        lblNumero.setText("Número:");
+        lblNumero.setText("<html><body><span>Número:<span style='color:red;'>*</span></span></body></html>");
 
         lblComplemento.setText("Compl.:");
 
-        comboUF.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboUF.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" }));
 
-        lblUf.setText("UF:");
+        lblUf.setText("<html><body><span>UF:<span style='color:red;'>*</span></span></body></html>");
 
-        lblEndereco.setText("Endereço:");
+        lblEndereco.setText("<html><body><span>Endereço:<span style='color:red;'>*</span></span></body></html>");
 
-        lblBairro.setText("Bairro:");
+        lblBairro.setText("<html><body><span>Bairro:<span style='color:red;'>*</span></span></body></html>");
 
-        lblCidade.setText("Cidade:");
+        lblCidade.setText("<html><body><span>Cidade:<span style='color:red;'>*</span></span></body></html>");
 
         lblReferencia.setText("Referência:");
 
@@ -112,16 +169,16 @@ public class NovoFornecedorJFrame extends javax.swing.JDialog {
                             .addGroup(paneGeralLayout.createSequentialGroup()
                                 .addGap(6, 6, 6)
                                 .addGroup(paneGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(lblFone)
-                                    .addComponent(lblNome))
+                                    .addComponent(lblFone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(paneGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtFone, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtIERG, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(paneGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneGeralLayout.createSequentialGroup()
-                                        .addComponent(lblDocumento)
+                                        .addComponent(lblDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(txtDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneGeralLayout.createSequentialGroup()
@@ -131,10 +188,10 @@ public class NovoFornecedorJFrame extends javax.swing.JDialog {
                     .addGroup(paneGeralLayout.createSequentialGroup()
                         .addGap(30, 30, 30)
                         .addGroup(paneGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblCep)
-                            .addComponent(lblEndereco)
-                            .addComponent(lblBairro)
-                            .addComponent(lblCidade)
+                            .addComponent(lblCep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblBairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblReferencia))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(paneGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -149,8 +206,8 @@ public class NovoFornecedorJFrame extends javax.swing.JDialog {
                                     .addComponent(txtEndereco))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(paneGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblNumero)
-                                    .addComponent(lblUf, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(lblNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblUf, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(lblComplemento, javax.swing.GroupLayout.Alignment.TRAILING))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(paneGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -170,38 +227,38 @@ public class NovoFornecedorJFrame extends javax.swing.JDialog {
                 .addGroup(paneGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblDocumento)
-                    .addComponent(lblNome))
+                    .addComponent(lblDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(paneGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtFone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtIERG, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtCelular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblCelular)
-                    .addComponent(lblFone))
+                    .addComponent(lblFone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(51, 51, 51)
                 .addComponent(lblEnderecoPrincipal)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(paneGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtCep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblCep))
+                    .addComponent(lblCep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(paneGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblNumero)
+                    .addComponent(lblNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblEndereco))
+                    .addComponent(lblEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(paneGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtBairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblComplemento)
                     .addComponent(txtComple, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblBairro))
+                    .addComponent(lblBairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(paneGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(comboUF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblUf)
-                    .addComponent(lblCidade))
+                    .addComponent(lblUf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(paneGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtReferencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -210,6 +267,11 @@ public class NovoFornecedorJFrame extends javax.swing.JDialog {
         );
 
         btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
 
         btnVoltar.setText("Voltar");
         btnVoltar.addActionListener(new java.awt.event.ActionListener() {
@@ -223,7 +285,7 @@ public class NovoFornecedorJFrame extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(461, Short.MAX_VALUE)
+                .addContainerGap(529, Short.MAX_VALUE)
                 .addComponent(btnVoltar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnSalvar)
@@ -253,9 +315,69 @@ public class NovoFornecedorJFrame extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void createOrUpdate() {
+        if(mFornecedor.getId() != 0) {
+            mFornecedor = this.mFornecedorController.getById(mFornecedor.getId());
+            mEndereco = this.mEnderecoController.getById(mFornecedor.getId());
+
+            txtNome.setText(mFornecedor.getNome());
+            txtDocumento.setText(mFornecedor.getDocumento());
+            txtIERG.setText(mFornecedor.getRg());
+            txtCelular.setText(mFornecedor.getCelular());
+
+            txtCep.setText(mEndereco.getCep());
+            txtEndereco.setText(mEndereco.getLogradouro());
+            txtBairro.setText(mEndereco.getBairro());
+            txtCidade.setText(mEndereco.getCidade());
+            txtReferencia.setText(mEndereco.getReferencia());
+            txtNumero.setText(mEndereco.getNumero());
+            txtComple.setText(mEndereco.getComplemento());
+            comboUF.setSelectedItem(mEndereco.getUf());
+
+            txtDocumento.setEnabled(false);
+            txtIERG.setEnabled(false);
+        }
+    }
+
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnVoltarActionPerformed
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+
+        mFornecedor.setNome(txtNome.getText());
+        if(StringUtils.isNullOrEmpty(mFornecedor.getRg()))
+            mFornecedor.setRg(txtIERG.getText());
+        if(StringUtils.isNullOrEmpty(mFornecedor.getDocumento()))
+            mFornecedor.setDocumento(txtDocumento.getText());
+        mFornecedor.setCelular(txtCelular.getText());
+
+        mEndereco.setCep(txtCep.getText());
+        mEndereco.setLogradouro(txtEndereco.getText());
+        mEndereco.setBairro(txtBairro.getText());
+        mEndereco.setCidade(txtCidade.getText());
+        mEndereco.setReferencia(txtReferencia.getText());
+        mEndereco.setNumero(txtNumero.getText());
+        mEndereco.setComplemento(txtComple.getText());
+        mEndereco.setUf(Objects.requireNonNull(comboUF.getSelectedItem()).toString());
+
+        mFornecedor.setEndereco(mEndereco);
+
+        try {
+            if(Validator.validateForNulls(mFornecedor)){
+               if(Validator.validateForNulls(mEndereco)) {
+                   this.mFornecedorController.insertAndUpdate(mFornecedor);
+                   JOptionPane.showMessageDialog(rootPane, "Operação realizada com sucesso!");
+                   this.dispose();
+               }
+            }
+        } catch (RequiredFieldException ex) {
+            ex.notifyUserWithToast();
+        } catch (IllegalAccessException ex) {
+            ex.printStackTrace();
+        }
+
+    }//GEN-LAST:event_btnSalvarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -318,7 +440,7 @@ public class NovoFornecedorJFrame extends javax.swing.JDialog {
     private javax.swing.JTextField txtComple;
     private javax.swing.JTextField txtDocumento;
     private javax.swing.JTextField txtEndereco;
-    private javax.swing.JTextField txtFone;
+    private javax.swing.JTextField txtIERG;
     private javax.swing.JTextField txtNome;
     private javax.swing.JTextField txtNumero;
     private javax.swing.JTextField txtReferencia;

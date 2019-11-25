@@ -21,7 +21,7 @@ public class DBUtils {
     public static Connection getConnection() throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException{
         Class.forName("org.h2.Driver").newInstance();
         String stringConexao = new StringBuilder()
-                .append("jdbc:h2:./brcantina").toString();
+                .append("jdbc:h2:~/brcantina").toString();
         Logger.getLogger(DBUtils.class.getName()).log(Level.INFO, stringConexao);
         Connection connection = DriverManager.getConnection(stringConexao, USER, PASSWORD);
         
@@ -35,6 +35,6 @@ public class DBUtils {
     }
 
     public static PreparedStatement getPreparedStatement(Connection connection, String sql) throws SQLException {
-        return connection.prepareStatement(sql);
+        return connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
     }
 }

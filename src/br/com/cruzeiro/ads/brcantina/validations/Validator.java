@@ -1,9 +1,11 @@
 package br.com.cruzeiro.ads.brcantina.validations;
 
+import br.com.cruzeiro.ads.brcantina.annotations.CNPJ;
 import br.com.cruzeiro.ads.brcantina.annotations.Email;
 import br.com.cruzeiro.ads.brcantina.annotations.Password;
 import br.com.cruzeiro.ads.brcantina.annotations.Required;
 import br.com.cruzeiro.ads.brcantina.exceptions.RequiredFieldException;
+import br.com.cruzeiro.ads.brcantina.utils.DocumentUtils;
 import br.com.cruzeiro.ads.brcantina.utils.EmailUtils;
 import br.com.cruzeiro.ads.brcantina.utils.PasswordUtils;
 import com.mysql.cj.util.StringUtils;
@@ -24,6 +26,7 @@ public class Validator {
             Annotation requiredAnnotation = field.getAnnotation(Required.class);
             Annotation emailAnnotation = field.getAnnotation(Email.class);
             Annotation passwordAnnotation = field.getAnnotation(Password.class);
+            Annotation cnpjAnnotation = field.getAnnotation(CNPJ.class);
 
             if (requiredAnnotation != null) {
                 Required required = (Required) requiredAnnotation;
@@ -58,6 +61,17 @@ public class Validator {
                     field.setAccessible(true);
                     String msgError = "A senha fornecida é muito fraca. Ex. de Senha: 123@Mudar";
                     if(!PasswordUtils.validate((String) field.get(objectToValidate)))
+                        listErrors.add(msgError);
+                }
+            }
+
+            if (cnpjAnnotation != null) {
+                CNPJ cnpj = (CNPJ) cnpjAnnotation;
+
+                if(cnpj.value()) {
+                    field.setAccessible(true);
+                    String msgError = "Erro, CNPJ invalido !!!";
+                    if(!DocumentUtils.isCNPJ((String) field.get(objectToValidate)))
                         listErrors.add(msgError);
                 }
             }

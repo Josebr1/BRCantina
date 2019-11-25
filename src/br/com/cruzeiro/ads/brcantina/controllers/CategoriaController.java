@@ -29,6 +29,7 @@ public class CategoriaController implements ICategoriaController {
             else
                 this.mICategoriaDAO.update(categoria);
         } catch (InstantiationException | SQLException | IllegalAccessException | ClassNotFoundException e) {
+            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, e);
             if (e instanceof JdbcSQLIntegrityConstraintViolationException)
                 JOptionPane.showMessageDialog(null, "Já existe um registro desse tipo cadastrado!");
         }
