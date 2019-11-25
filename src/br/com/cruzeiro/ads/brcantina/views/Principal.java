@@ -18,6 +18,7 @@ import br.com.cruzeiro.ads.brcantina.views.internalframe.ClientesIternFrame;
 import br.com.cruzeiro.ads.brcantina.views.internalframe.ColaboradoresIternFrame;
 import br.com.cruzeiro.ads.brcantina.views.internalframe.ContasPagarInterFrame;
 import br.com.cruzeiro.ads.brcantina.views.internalframe.ContasReceberInterFrame;
+import br.com.cruzeiro.ads.brcantina.views.internalframe.FormasPagamentoInterFrame;
 import br.com.cruzeiro.ads.brcantina.views.internalframe.FornecedoresInterFrame;
 import br.com.cruzeiro.ads.brcantina.views.internalframe.HistoricoPedidosInterFrame;
 import br.com.cruzeiro.ads.brcantina.views.internalframe.ProdutosInterFrame;
@@ -42,6 +43,7 @@ public class Principal extends JFrameActivity {
     private FornecedoresInterFrame mFornecedoresInterFrame;
     private ContasPagarInterFrame mContasPagarInterFrame;
     private ContasReceberInterFrame mContasReceberInterFrame;
+    private FormasPagamentoInterFrame mFormasPagamentoInterFrame;
     
     
     /*CONTROLLERS*/
@@ -207,6 +209,11 @@ public class Principal extends JFrameActivity {
         menuFornecedores.add(menuItemContaReceber);
 
         menuItemFormaPagamento.setText("Forma de Pagamento");
+        menuItemFormaPagamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemFormaPagamentoActionPerformed(evt);
+            }
+        });
         menuFornecedores.add(menuItemFormaPagamento);
 
         menuOptions.add(menuFornecedores);
@@ -319,6 +326,12 @@ public class Principal extends JFrameActivity {
             java.util.logging.Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_menuItemConfigSistemaActionPerformed
+
+    private void menuItemFormaPagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemFormaPagamentoActionPerformed
+        
+        InternalFrameUtils.init(mFormasPagamentoInterFrame, dkpContainer);
+        
+    }//GEN-LAST:event_menuItemFormaPagamentoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -447,6 +460,7 @@ public class Principal extends JFrameActivity {
         mFornecedoresInterFrame = new FornecedoresInterFrame();
         mContasPagarInterFrame = new ContasPagarInterFrame();
         mContasReceberInterFrame = new ContasReceberInterFrame();
+        mFormasPagamentoInterFrame = new FormasPagamentoInterFrame();
     }
 
 }

@@ -59,7 +59,7 @@ public class DataBase {
 
         tableSQL.add(
                 "CREATE TABLE IF NOT EXISTS `foma_pagamento` (\n" +
-                        "  `id_foma_pagamento` int(11) NOT NULL,\n" +
+                        "  `id_foma_pagamento` int(11) NOT NULL AUTO_INCREMENT,\n" +
                         "  `descricao` varchar(45) NOT NULL UNIQUE,\n" +
                         "  PRIMARY KEY (`id_foma_pagamento`)\n" +
                         ") ENGINE=InnoDB DEFAULT CHARSET=utf8;");
