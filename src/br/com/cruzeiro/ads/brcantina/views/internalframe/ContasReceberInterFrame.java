@@ -5,7 +5,17 @@
  */
 package br.com.cruzeiro.ads.brcantina.views.internalframe;
 
+import br.com.cruzeiro.ads.brcantina.controllers.ContaReceberController;
+import br.com.cruzeiro.ads.brcantina.controllers.interfaces.IContaReceberController;
+import br.com.cruzeiro.ads.brcantina.models.ContaReceber;
+import br.com.cruzeiro.ads.brcantina.models.Usuario;
+import br.com.cruzeiro.ads.brcantina.models.enums.TipoUsuario;
 import br.com.cruzeiro.ads.brcantina.views.NovaContaReceberJFrame;
+
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -13,13 +23,31 @@ import br.com.cruzeiro.ads.brcantina.views.NovaContaReceberJFrame;
  */
 public class ContasReceberInterFrame extends javax.swing.JInternalFrame {
 
+    private IContaReceberController mContaReceberController;
+    
     /**
      * Creates new form ContasReceberInterFrame
      */
     public ContasReceberInterFrame() {
         initComponents();
+        this.mContaReceberController = new ContaReceberController();
     }
 
+    private void populatorTable() {
+        List<ContaReceber> all = this.mContaReceberController.all();
+
+        DefaultTableModel model = new DefaultTableModel(new String [] {
+                "Tipo", "Valor Previsto", "%Tava", "Valor Líq.", "Forma Pagamento", "Pagamento", "Crédito", "% do Total do Pedido"
+        }, 0);
+
+
+        for (ContaReceber u : all) {
+            model.addRow(new Object[]{u.getTipoConta(), u.getValor(), 0.0, 0.0, u.getFormaPagamento().getDescricao(), 0.0, u.getDataCredito(), 0.0});
+        }
+
+        tableContas.setModel(model);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -52,6 +80,23 @@ public class ContasReceberInterFrame extends javax.swing.JInternalFrame {
         setMaximizable(true);
         setTitle("Contas a Receber");
         setToolTipText("Contas a Receber");
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameOpened(evt);
+            }
+        });
 
         paneOpcoes.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -168,13 +213,13 @@ public class ContasReceberInterFrame extends javax.swing.JInternalFrame {
 
         tableContas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Tipo", "Cod. Pedido", "Valor Previsto", "%Taxa", "Valor Líq.", "Forma Pagamento", "Pagamento", "Crédito", "Operadora", "Id Caixa", "Status", "Data Abertura Pedido", "% do Total do Pedido"
+                "Tipo", "Valor Previsto", "%Taxa", "Valor Líq.", "Forma Pagamento", "Pagamento", "Crédito", "% do Total do Pedido"
             }
         ));
         scrollConta.setViewportView(tableContas);
@@ -216,9 +261,52 @@ public class ContasReceberInterFrame extends javax.swing.JInternalFrame {
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
         NovaContaReceberJFrame contaReceberJFrame = new NovaContaReceberJFrame();
         contaReceberJFrame.setVisible(true);
-        contaReceberJFrame.setLocationRelativeTo(this);
+        contaReceberJFrame.setLocationRelativeTo(null);
+        contaReceberJFrame.addWindowListener(new CallbackUpdateTable());
     }//GEN-LAST:event_btnNovoActionPerformed
 
+    private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
+        populatorTable();
+    }//GEN-LAST:event_formInternalFrameOpened
+
+
+    private class CallbackUpdateTable implements WindowListener {
+        @Override
+        public void windowOpened(WindowEvent windowEvent) {
+
+        }
+
+        @Override
+        public void windowClosing(WindowEvent windowEvent) {
+
+        }
+
+        @Override
+        public void windowClosed(WindowEvent windowEvent) {
+            populatorTable();
+            btnEditar.setEnabled(false);
+        }
+
+        @Override
+        public void windowIconified(WindowEvent windowEvent) {
+
+        }
+
+        @Override
+        public void windowDeiconified(WindowEvent windowEvent) {
+
+        }
+
+        @Override
+        public void windowActivated(WindowEvent windowEvent) {
+
+        }
+
+        @Override
+        public void windowDeactivated(WindowEvent windowEvent) {
+
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEditar;

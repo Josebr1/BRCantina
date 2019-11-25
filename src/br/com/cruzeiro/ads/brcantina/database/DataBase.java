@@ -206,7 +206,7 @@ public class DataBase {
 
         tableSQL.add(
                 "CREATE TABLE IF NOT EXISTS `conta_receber` (\n" +
-                        "  `id_conta_receber` int(11) NOT NULL,\n" +
+                        "  `id_conta_receber` int(11) NOT NULL AUTO_INCREMENT,\n" +
                         "  `tipo_conta` varchar(45) DEFAULT NULL,\n" +
                         "  `valor` decimal(10,0) DEFAULT NULL,\n" +
                         "  `data_credito` date DEFAULT NULL,\n" +

@@ -1,9 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.cruzeiro.ads.brcantina.views;
+
+import br.com.cruzeiro.ads.brcantina.controllers.ContaReceberController;
+import br.com.cruzeiro.ads.brcantina.controllers.FormasPagamentoController;
+import br.com.cruzeiro.ads.brcantina.controllers.interfaces.IContaReceberController;
+import br.com.cruzeiro.ads.brcantina.controllers.interfaces.IFormasPagamentoController;
+import br.com.cruzeiro.ads.brcantina.models.ContaReceber;
+import br.com.cruzeiro.ads.brcantina.models.FormasPagamento;
+import java.util.*;
 
 /**
  *
@@ -11,14 +14,32 @@ package br.com.cruzeiro.ads.brcantina.views;
  */
 public class NovaContaReceberJFrame extends javax.swing.JDialog {
 
+    
+    private IFormasPagamentoController mFormasPagamentoController;
+    private IContaReceberController mContaReceberController;
+    
     /**
      * Creates new form NovaContaReceberJFrame
      */
     public NovaContaReceberJFrame() {
         this.setModal(true);
+        //this.setModal(true);
         initComponents();
+        
+       // Calendar c = Calendar.getInstance();
+       // SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        
+        datePickerDataCredito.setFormats("dd-MM-yyyy");
+        datePickerDataPagamento.setFormats("dd-MM-yyyy");
+
+        initControllers();
     }
 
+    private void initControllers() {
+        this.mFormasPagamentoController = new FormasPagamentoController();
+        this.mContaReceberController = new ContaReceberController();
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -49,6 +70,11 @@ public class NovaContaReceberJFrame extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Conta a Receber");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         paneInformacoes.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -70,9 +96,18 @@ public class NovaContaReceberJFrame extends javax.swing.JDialog {
         txtArObservacao.setRows(5);
         scrollObservacao.setViewportView(txtArObservacao);
 
+        txtTaxa.setText("0,0");
+
         comboFormaPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        comboTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        datePickerDataPagamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                datePickerDataPagamentoActionPerformed(evt);
+            }
+        });
+
+        comboTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Outras Receitas" }));
+        comboTipo.setEnabled(false);
 
         javax.swing.GroupLayout paneInformacoesLayout = new javax.swing.GroupLayout(paneInformacoes);
         paneInformacoes.setLayout(paneInformacoesLayout);
@@ -141,6 +176,11 @@ public class NovaContaReceberJFrame extends javax.swing.JDialog {
         );
 
         btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
 
         btnVoltar.setText("Voltar");
         btnVoltar.addActionListener(new java.awt.event.ActionListener() {
@@ -184,6 +224,48 @@ public class NovaContaReceberJFrame extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_btnVoltarActionPerformed
 
+    private void datePickerDataPagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_datePickerDataPagamentoActionPerformed
+
+    }//GEN-LAST:event_datePickerDataPagamentoActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+
+
+
+        updateListFormasPagamento();
+    }//GEN-LAST:event_formWindowOpened
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        ContaReceber c = new ContaReceber();
+        c.setDataCredito(datePickerDataCredito.getDate());
+        c.setFormaPagamento(new FormasPagamento(Objects.requireNonNull(comboFormaPagamento.getSelectedItem()).toString()));
+        c.setObservacao(txtArObservacao.getText());
+        c.setTipoConta(Objects.requireNonNull(comboTipo.getSelectedItem()).toString());
+        c.setValor(Double.parseDouble(txtValor.getText()));
+
+        this.mContaReceberController.insertAndUpdate(c);
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void updateListFormasPagamento() {
+        new Thread() {
+            @Override
+            public void run() {
+                comboFormaPagamento.removeAllItems();
+
+                List<FormasPagamento> all = mFormasPagamentoController.all();
+
+                String[] toStringDescription = new String[all.size()];
+
+                for (int i =0; i < all.size(); i++) {
+                    toStringDescription[i] = all.get(i).getDescricao();
+                }
+                comboFormaPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(toStringDescription));
+            }
+        }.start();
+    }
+
+
+    
     /**
      * @param args the command line arguments
      */
