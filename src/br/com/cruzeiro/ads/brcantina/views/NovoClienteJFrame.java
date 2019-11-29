@@ -32,18 +32,11 @@ public class NovoClienteJFrame extends javax.swing.JDialog {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
         paneGeral = new javax.swing.JPanel();
         lblDadosPrincipais = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
         txtNome = new javax.swing.JTextField();
-        txtDocumento = new javax.swing.JTextField();
-        try{
-            javax.swing.text.MaskFormatter data= new javax.swing.text.MaskFormatter("##.###.###/####-##");
-            txtDocumento = new javax.swing.JFormattedTextField(data);
-        }
-        catch (Exception e){
-        }
+        txtDocumento = new javax.swing.JTextField();  
         lblDocumento = new javax.swing.JLabel();
         lblNome = new javax.swing.JLabel();
         lblFone = new javax.swing.JLabel();
@@ -52,12 +45,6 @@ public class NovoClienteJFrame extends javax.swing.JDialog {
         txtCelular = new javax.swing.JTextField();
         lblEnderecoPrincipal = new javax.swing.JLabel();
         txtCep = new javax.swing.JTextField();
-        try{
-            javax.swing.text.MaskFormatter data= new javax.swing.text.MaskFormatter("#####-###");
-            txtCep = new javax.swing.JFormattedTextField(data);
-        }catch (Exception e){
-            log.error(e);
-        }
         lblCep = new javax.swing.JLabel();
         txtEndereco = new javax.swing.JTextField();
         lblNumero = new javax.swing.JLabel();
@@ -80,6 +67,20 @@ public class NovoClienteJFrame extends javax.swing.JDialog {
         comboSexo = new javax.swing.JComboBox<>();
         btnSalvar = new javax.swing.JButton();
         btnVoltar = new javax.swing.JButton();
+        
+        try{
+            javax.swing.text.MaskFormatter data= new javax.swing.text.MaskFormatter("#####-###");
+            txtCep = new javax.swing.JFormattedTextField(data);
+        }catch (Exception e){
+            log.error(e);
+        }
+        
+        try{
+            javax.swing.text.MaskFormatter data= new javax.swing.text.MaskFormatter("##.###.###/####-##");
+            txtDocumento = new javax.swing.JFormattedTextField(data);
+        }
+        catch (Exception e){
+        }
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Novo Cliente");

@@ -5,6 +5,8 @@
  */
 package br.com.cruzeiro.ads.brcantina.views.internalframe;
 
+import java.awt.event.FocusEvent;
+
 import br.com.cruzeiro.ads.brcantina.views.NovoClienteJFrame;
 
 /**
@@ -28,25 +30,21 @@ public class ClientesIternFrame extends javax.swing.JInternalFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
         paneInformations = new javax.swing.JPanel();
         paneFooter = new javax.swing.JPanel();
         btnImprimir = new javax.swing.JButton();
-        paneHeader = new javax.swing.JPanel();
-        txtPesquisarCliente = new javax.swing.JTextField();
         btnEditar = new javax.swing.JButton();
         btnNovo = new javax.swing.JButton();
+        paneHeader = new javax.swing.JPanel();
+        txtPesquisarCliente = new javax.swing.JTextField();
         scrollPaneClientes = new javax.swing.JScrollPane();
         tableClientes = new javax.swing.JTable();
-
+        javax.swing.GroupLayout paneFooterLayout = new javax.swing.GroupLayout(paneFooter);
+        
         setClosable(true);
         setMaximizable(true);
-
         paneFooter.setBackground(new java.awt.Color(102, 102, 102));
-
         btnImprimir.setText("Imprimir");
-
-        javax.swing.GroupLayout paneFooterLayout = new javax.swing.GroupLayout(paneFooter);
         paneFooter.setLayout(paneFooterLayout);
         paneFooterLayout.setHorizontalGroup(
             paneFooterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -62,10 +60,17 @@ public class ClientesIternFrame extends javax.swing.JInternalFrame {
                 .addComponent(btnImprimir)
                 .addContainerGap())
         );
-
-        paneHeader.setBackground(new java.awt.Color(102, 102, 102));
-
-        txtPesquisarCliente.setText("Nome, telefone ou endereço....");
+       
+        txtPesquisarCliente.addFocusListener(new java.awt.event.FocusAdapter() {
+        	public void focusGained(FocusEvent e) {
+        		if (txtPesquisarCliente.getText().isEmpty() || txtPesquisarCliente.getText().equalsIgnoreCase("Nome, telefone ou endereço..."))txtPesquisarCliente.setText("");
+        	}
+        	public void focusLost(FocusEvent e) {
+        		if (txtPesquisarCliente.getText().isEmpty()) txtPesquisarCliente.setText("Nome, telefone ou endereço...");
+        	}
+        });
+        
+        paneHeader.setBackground(new java.awt.Color(102, 102, 102)); 
 
         btnEditar.setText("Editar");
 
